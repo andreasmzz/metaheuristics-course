@@ -1,0 +1,174 @@
+Randomic Solution Benefit: 2178
+Ratio Greedy Solution Benefit: 7839
+Dep Size Greedy Solution Benefit: 5648
+Pack Benefit Greedy Solution Benefit: 9515
+Num Pack Greedy Solution Benefit: 24032
+Randomized Ratio Greedy Solution Benefit: 3716
+--------------------------------------------------
+Randomic Solution Benefit: 2611
+Ratio Greedy Solution Benefit: 7839
+Dep Size Greedy Solution Benefit: 5648
+Pack Benefit Greedy Solution Benefit: 9515
+Num Pack Greedy Solution Benefit: 24032
+Randomized Ratio Greedy Solution Benefit: 5294
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+Randomic Solution Benefit: 3075
+Ratio Greedy Solution Benefit: 7839
+Dep Size Greedy Solution Benefit: 5648
+Pack Benefit Greedy Solution Benefit: 9515
+Num Pack Greedy Solution Benefit: 6699
+Randomized Ratio Greedy Solution Benefit: 4960
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+Randomic Solution: 
+        Benefit: 1788
+        Capacity left: 15
+Ratio Greedy Solution:
+        Benefit: 7839
+        Capacity left: 162
+Dep Size Greedy Solution:
+        Benefit: 5648
+        Capacity left: 115
+Pack Benefit Greedy Solution:
+        Benefit: 9515
+        Capacity left: 75
+Num Pack Greedy Solution:
+        Benefit: 6699
+        Capacity left: 20
+Randomized Ratio Greedy Solution:
+        Benefit: 3568
+        Capacity left: 27
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+Randomic Solution: 
+        Benefit: 2169
+        Capacity left: 15
+Ratio Greedy Solution:
+        Benefit: 8107
+        Capacity left: 58
+Dep Size Greedy Solution:
+        Benefit: 5648
+        Capacity left: 115
+Pack Benefit Greedy Solution:
+        Benefit: 9515
+        Capacity left: 75
+Num Pack Greedy Solution:
+        Benefit: 6699
+        Capacity left: 20
+Randomized Ratio Greedy Solution:
+        Benefit: 5324
+        Capacity left: 0
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+Randomic Solution:    
+        Benefit: 1367 
+        Capacity left: 19
+Ratio Greedy Solution:
+        Benefit: 8107
+        Capacity left: 58
+Dep Size Greedy Solution:
+        Benefit: 5648
+        Capacity left: 115
+Pack Benefit Greedy Solution:
+        Benefit: 9515
+        Capacity left: 75
+Num Pack Greedy Solution:
+        Benefit: 6699
+        Capacity left: 20
+Randomized Ratio Greedy Solution:
+        Benefit: 3437
+        Capacity left: 2
+Randomized Dep Size Greedy Solution:
+        Benefit: 3009
+        Capacity left: 6
+Randomized Pack Benefit Greedy Solution:
+        Benefit: 7283
+        Capacity left: 6
+Randomized Num Pack Greedy Solution:
+        Benefit: 756
+        Capacity left: 19
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+Randomic Solution:      
+        Benefit: 2860   
+        Capacity left: 6
+Ratio Greedy Solution: 
+        Benefit: 8107 
+        Capacity left: 58
+Dep Size Greedy Solution:         
+        Benefit: 5648 
+        Capacity left: 115        
+Pack Benefit Greedy Solution:     
+        Benefit: 9515 
+        Capacity left: 75
+Num Pack Greedy Solution:         
+        Benefit: 6699 
+        Capacity left: 20
+Randomized Ratio Greedy Solution: 
+        Benefit: 2511
+        Capacity left: 21
+Randomized Dep Size Greedy Solution:
+        Benefit: 4865
+        Capacity left: 21
+Randomized Pack Benefit Greedy Solution:
+        Benefit: 7111
+        Capacity left: 4
+Randomized Num Pack Greedy Solution:
+        Benefit: 3108
+        Capacity left: 2
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+Randomic Solution:       
+        Benefit: 1658    
+        Capacity left: 21
+Ratio Greedy Solution:    
+        Benefit: 8107     
+        Capacity left: 58 
+Dep Size Greedy Solution: 
+        Benefit: 5648
+        Capacity left: 115
+Pack Benefit Greedy Solution:
+        Benefit: 9515
+        Capacity left: 75
+Num Pack Greedy Solution:
+        Benefit: 6699
+        Capacity left: 20
+Randomized Ratio Greedy Solution:
+        Benefit: 1822
+        Capacity left: 24
+Randomized Dep Size Greedy Solution:
+        Benefit: 3054
+        Capacity left: 14
+Randomized Pack Benefit Greedy Solution:
+        Benefit: 8005
+        Capacity left: 8
+Randomized Num Pack Greedy Solution:
+        Benefit: 1883
+        Capacity left: 18
+Test for full True:
+        Benefit: 24032
+        Capacity left: -4061
+--------------------------------------------------
+
+--------------------------------------------------
+
+--------------------------------------------------
+
+--------------------------------------------------
+
+--------------------------------------------------
+
+--------------------------------------------------
