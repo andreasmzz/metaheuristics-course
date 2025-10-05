@@ -9,8 +9,9 @@ solution_data: list[bool]
 
 @dataclass
 class ExperimentResult:
-    id: str
-    # run_timestamp: datetime.datetime = field(default_factory=datetime.datetime.now)
+    experiment_id: str
+    input_name: str
+    run_timestamp: datetime.datetime = field(default_factory=datetime.datetime.now)
 
     initial_solution: list[bool]
     refined_solution: list[bool]

@@ -187,14 +187,16 @@ def create_randomized_num_pack_greedy_solution(pack_benefits:list[int], dep_size
 
 
 # Acceptable input and corresponding output types for first solution functions
-first_solution_function_input_output = Union[
+first_solution_function_type = Union[
     Callable[[list[int], list[int], list[tuple[int, int]], int], list[bool]], # randomic    
     Callable[[list[int], list[int], list[tuple[int, int]], int, bool], list[bool]], # greedy
     Callable[[list[int], list[int], list[tuple[int, int]], int, bool, float], list[bool]] # randomized greedy
 ]
 
+''' Dictionaries and lists '''
+
 # Dictionary mapping heuristic names to their corresponding functions
-first_solutions_dict: dict[str, first_solution_function_input_output] = {
+first_solutions_dict: dict[str, first_solution_function_type] = {
     "create_randomic_solution": create_randomic_solution,
     "create_ratio_greedy_solution": create_ratio_greedy_solution,
     "create_dep_size_greedy_solution": create_dep_size_greedy_solution,
@@ -206,3 +208,32 @@ first_solutions_dict: dict[str, first_solution_function_input_output] = {
     "create_randomized_num_pack_greedy_solution": create_randomized_num_pack_greedy_solution
 }
 
+# Deterministic solutions dictionary
+deterministic_first_solutions_list: list[str] = [
+    "create_ratio_greedy_solution",
+    "create_dep_size_greedy_solution",
+    "create_pack_benefit_greedy_solution",
+    "create_num_pack_greedy_solution"
+]
+
+# Random adn randomized first solution functions list
+randomized_first_solutions_list:list = [
+    "create_randomic_solution",
+    "create_randomized_ratio_greedy_solution",
+    "create_randomized_dep_size_greedy_solution",
+    "create_randomized_pack_benefit_greedy_solution",
+    "create_randomized_num_pack_greedy_solution"
+]
+
+# All create solution functions list
+first_solutions_list:list = [
+    "create_randomic_solution",
+    "create_ratio_greedy_solution",
+    "create_dep_size_greedy_solution",
+    "create_pack_benefit_greedy_solution",
+    "create_num_pack_greedy_solution",
+    "create_randomized_ratio_greedy_solution",
+    "create_randomized_dep_size_greedy_solution",
+    "create_randomized_pack_benefit_greedy_solution",
+    "create_randomized_num_pack_greedy_solution"
+]

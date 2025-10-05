@@ -1,7 +1,5 @@
 # Python 3.13.4
 
-import typing
-from typing import Callable
 import time
 
 import first_solution as fs
@@ -9,6 +7,8 @@ import auxiliary_functions as aux
 import refinement_heuristic as rh
 import move as move
 from first_solution import first_solutions_dict
+import run_experiment
+import analyze_results
 
 
 file_name = "input/prob-software-85-100-812-12180.txt"
@@ -37,8 +37,28 @@ file_name = "input/prob-software-85-100-812-12180.txt"
 
    
 
+# Run current relevant experiments
+def main() -> None:
+    print("-"*75)
+    print("RUNNING ALL CURRENT EXPERIMENTS")
+    print("-"*75)
+
+    start_time:float = time.time()
+
+    run_experiment.run_constructive_experiment()
+    run_experiment.run_local_search_experiment()
+
+    elapsed_total:float = time.time() - start_time
+
+    print("-"*75)
+    print(f"ALL EXPERIMENTS COMPLETED IN {elapsed_total:.2f} SECONDS")
+    print("-"*75)
+
+if __name__ == "__main__":
+    main()
 
 
+''' Old main
 def main() -> None:
     try:
         with open(file_name, 'r') as file:
@@ -171,6 +191,4 @@ def main() -> None:
 
     except FileNotFoundError:
         print(f"File {file_name} was not found.")
-    
-
-main()
+'''
