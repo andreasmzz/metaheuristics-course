@@ -243,3 +243,61 @@ variable_neighborhood_descent | ['random_best_step', 'first_best_step'] | ['flip
 ---------------------------------------------------------------------------
 ANALYSIS COMPLETE
 ---------------------------------------------------------------------------
+
+
+
+
+
+
+---------------------------------------------------------------------------
+RUNNING ALL CURRENT EXPERIMENTS
+---------------------------------------------------------------------------
+Starting local search experiments...
+  Running hill_climbing_random_best_step_flip_bit_swap_bits - 30 runs...
+    Completed 30 runs for hill_climbing
+  Running hill_climbing_first_best_step_flip_bit - 30 runs...
+    Completed 30 runs for hill_climbing
+  Running variable_neighborhood_descent_random_best_step_first_best_step_flip_bit_swap_bits - 30 runs...
+    Completed 30 runs for variable_neighborhood_descent
+  Running variable_neighborhood_descent_absolute_best_step_flip_bit - 30 runs...
+    Completed 30 runs for variable_neighborhood_descent
+ OK Local search experiments complete! Saved to local_search.csv
+
+---------------------------------------------------------------------------
+ALL EXPERIMENTS COMPLETED IN 703.40 SECONDS
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+ANALYZING RESULTS
+---------------------------------------------------------------------------
+
+==================================================
+CONSTRUCTIVE METHODS ANALYSIS
+==================================================
+Method                                                             Best  Avg Benefit    Std Dev   Avg Time
+--------------------------------------------------
+create_dep_size_greedy_solution                                       0         0.00       0.00   0.000584s
+create_num_pack_greedy_solution                                    6699      6699.00       0.00   0.000262s
+create_pack_benefit_greedy_solution                                9515      9515.00       0.00   0.000386s
+create_randomic_solution                                           4824      2018.30     958.79   0.000092s
+create_randomized_dep_size_greedy_solution                         4821      2961.80     894.89   0.000403s
+create_randomized_num_pack_greedy_solution                         6107      3059.07    1078.36   0.000589s
+create_randomized_pack_benefit_greedy_solution                     9661      7772.27    1048.38   0.000717s
+create_randomized_ratio_greedy_solution                            5409      3516.33    1097.08   0.001082s
+create_ratio_greedy_solution                                       8107      8107.00       0.00   0.000571s
+==================================================
+
+==================================================
+LOCAL SEARCH ANALYSIS
+==================================================
+Local Search Method            Refinement                     Neighborhoods            Best      Avg      Std     Time
+--------------------------------------------------
+hill_climbing                  first_best_step                flip_bit                 8107   8107.0      0.0     0.13s
+hill_climbing                  random_best_step               flip_bit,swap_bits      10952   9902.6    542.6     2.88s
+variable_neighborhood_descent  absolute_best_step             flip_bit                 8107   8107.0      0.0     0.13s
+variable_neighborhood_descent  random_best_step,first_best_step flip_bit,swap_bits      11490  10969.6    300.3    20.28s
+==================================================
+
+---------------------------------------------------------------------------
+ANALYSIS COMPLETE
+---------------------------------------------------------------------------
