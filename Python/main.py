@@ -37,21 +37,36 @@ file_name = "input/prob-software-85-100-812-12180.txt"
 
    
 
-# Run current relevant experiments
+# Run current relevant experiments and their analysis
 def main() -> None:
+
+    ''' Experiments '''
+
     print("-"*75)
     print("RUNNING ALL CURRENT EXPERIMENTS")
     print("-"*75)
 
     start_time:float = time.time()
 
-    run_experiment.run_constructive_experiment()
     run_experiment.run_local_search_experiment()
 
     elapsed_total:float = time.time() - start_time
 
     print("-"*75)
     print(f"ALL EXPERIMENTS COMPLETED IN {elapsed_total:.2f} SECONDS")
+    print("-"*75)
+
+    ''' Analysis '''
+
+    print("\n" + "-"*75)
+    print("ANALYZING RESULTS")
+    print("-"*75 + "\n")
+    
+    analyze_results.analyze_constructive()
+    analyze_results.analyze_local_search()
+    
+    print("-"*75)
+    print("ANALYSIS COMPLETE")
     print("-"*75)
 
 if __name__ == "__main__":

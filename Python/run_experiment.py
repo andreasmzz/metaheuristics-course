@@ -161,7 +161,9 @@ def run_local_search_experiment() -> None:
                 final_move = ls.hill_climbing(
                     sol=initial_sol,
                     pack_benefits=pack_benefits,
+                    dep_sizes=dep_sizes,
                     pack_dep=pack_dep,
+                    capacity=capacity,
                     refinement_heuristics=exp["refinement_funcs"],
                     neighborhood_names=exp["neighborhoods"],
                     time_limit=30.0,
@@ -171,7 +173,9 @@ def run_local_search_experiment() -> None:
                 final_move = ls.variable_neighborhood_descent(
                     sol=initial_sol,
                     pack_benefits=pack_benefits,
+                    dep_sizes=dep_sizes,
                     pack_dep=pack_dep,
+                    capacity=capacity,
                     refinement_heuristics=exp["refinement_funcs"],
                     neighborhood_names=exp["neighborhoods"],
                     time_limit=30.0,
@@ -198,7 +202,8 @@ def run_local_search_experiment() -> None:
             evals: int = aux.get_evaluation_count()
             improvement: int = final_benefit - initial_benefit
             improvement_pct: float = 100.0 * improvement / initial_benefit if initial_benefit > 0 else 0.0
-            
+            capacity_ramaining:int = aux.get_remaining_capacity(dep_sizes, final_move[0], capacity)
+
             results.append({
                 "run_id": f"local_search_{run_id}",
                 "instance_file": INSTANCE_FILE[0],
@@ -211,6 +216,7 @@ def run_local_search_experiment() -> None:
                 "final_benefit": final_benefit,
                 "improvement": improvement,
                 "improvement_pct": improvement_pct,
+                "capacity_remaining": capacity_ramaining,
                 "time": elapsed,
                 "evaluations": evals,
                 "timestamp": datetime.now().isoformat()
