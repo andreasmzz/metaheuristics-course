@@ -301,3 +301,19 @@ variable_neighborhood_descent  random_best_step,first_best_step flip_bit,swap_bi
 ---------------------------------------------------------------------------
 ANALYSIS COMPLETE
 ---------------------------------------------------------------------------
+
+
+
+Simulated annealing:
+Best found:
+        Solution: [True, True, True, True, False, True, True, False, False, True, True, False, True, True, True, True, True, True, True, True, True, True, False, False, True, False, True, False, True, True, True, True, True, False, True, True, True, False, True, Truealse, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, Tr True, True, True, Truue, True, True, True, True, True, True, True, True, True, True, True, True, True, True, T True, True, True, Trurue, False, True, False, True, True, True, False, True, True, False, True, True, True, True, True, True, True, ue, False, True, True, True, True, False, True, True, True, False, True, True, True, Truerue, False, True, True, True, True]
+        Eval: 11306
+
+Time: 90.00509333610535
+
+Best found:
+        Solution: [True, True, True, True, False, True, True, True, True, True, False, True, True, True, True, 
+True, True, True, True, True, True, True, False, False, True, False, True, False, True, True, True, True, True, False, True, True, False, True, True, True, True, True, True, False, True, False, True, True, False, True, True, True, False, True, False, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True]
+        Eval: 12045
+
+Time: 90.00639700889587

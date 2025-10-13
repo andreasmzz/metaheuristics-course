@@ -49,10 +49,9 @@ def reverse_segment(sol: list[bool], start: int, end: int) -> move_type:
 # Shift a segment of bits: sol[start:end+1] = sol[start:end+1][positions:] + sol[start:end+1][:positions]
 def shift_segment(sol: list[bool], start: int, end: int, positions: int) -> move_type:
     segment = sol[start:end+1]
-    del sol[start:end+1]
-    new_start = (start + positions) % (len(sol) + len(segment))
-    for i, val in enumerate(segment):
-        sol.insert(new_start + i, val)
+    positions = positions % len(segment) # in case positions > len(segment)
+    if positions == 0: return (sol, "shift_segment", start, end, positions) # no change
+    sol[start:end+1] = segment[positions:] + segment[:positions]
     return (sol, "shift_segment", start, end, positions)
 
 # Move a segment of bits to a new position: sol[new_position:new_position] = sol[start:end+1]; del sol[start:end+1]
@@ -115,7 +114,7 @@ def random_move(sol: list[bool], neighborhood_names:list[str] = []) -> move_type
         case "shift_segment":
             start = random.randint(0, len(sol) - 2)
             end = random.randint(start + 1, len(sol) - 1)
-            positions = random.randint(1, len(sol) - (end - start + 1))
+            positions = random.randint(1, end - start + 1)
             return shift_segment(sol, start, end, positions)
         
         case "move_segment":
@@ -125,6 +124,14 @@ def random_move(sol: list[bool], neighborhood_names:list[str] = []) -> move_type
             return move_segment(sol, start, end, new_position)
         case _:
             return error_output
+
+#
+def get_valid_random_move(sol:list[bool], neighborhood_names:list[str] = [], max_tries:int = 100) -> move_type:
+    for _ in range(max_tries):
+        new_move:move_type = random_move(sol[:], neighborhood_names)
+        if new_move[1] != "error":
+            return new_move
+    return (sol, "error", -1)
 
 ''' Generators '''
 # Generate all possible moves by type

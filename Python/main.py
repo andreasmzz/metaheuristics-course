@@ -2,16 +2,26 @@
 
 import time
 
-import first_solution as fs
 import auxiliary_functions as aux
-import refinement_heuristic as rh
 import move as move
-from first_solution import first_solutions_dict
 import run_experiment
 import analyze_results
 
 
-file_name = "input/prob-software-85-100-812-12180.txt"
+file_names:list[str] = [
+    "input/prob-software-85-100-812-12180.txt", # 0
+    "input/sukp03_100_100_0.10_0.75.txt",       # 1
+    "input/sukp06_200_200_0.10_0.75.txt",       # 2
+    "input/sukp12_400_400_0.10_0.75.txt",       # 3
+    "input/sukp18_100_100_0.15_0.85.txt",       # 4
+    "input/sukp24_300_300_0.15_0.85.txt",       # 5
+    "input/sukp29_500_485_0.15_0.85.txt"        # 6
+]
+
+BIGGER_TIME_LIMIT: float = 30.0 * 60.0 # seconds
+SMALLER_TIME_LIMIT: float = 3.5 * 60.0 # seconds
+
+
 
 ''' Input file format:'''
 
@@ -39,35 +49,33 @@ file_name = "input/prob-software-85-100-812-12180.txt"
 
 # Run current relevant experiments and their analysis
 def main() -> None:
-
-    ''' Experiments '''
-
-    print("-"*75)
-    print("RUNNING ALL CURRENT EXPERIMENTS")
-    print("-"*75)
-
     start_time:float = time.time()
+    outer_time_limit:float = BIGGER_TIME_LIMIT
+    inner_time_limit: float = SMALLER_TIME_LIMIT
 
-    run_experiment.run_local_search_experiment()
-
-    elapsed_total:float = time.time() - start_time
-
-    print("-"*75)
-    print(f"ALL EXPERIMENTS COMPLETED IN {elapsed_total:.2f} SECONDS")
-    print("-"*75)
-
-    ''' Analysis '''
-
-    print("\n" + "-"*75)
-    print("ANALYZING RESULTS")
-    print("-"*75 + "\n")
+    '''
+    # for test only use
+    pack_benefits, dep_sizes, pack_dep, capacity = aux.load_instance(file_names[1])
+    count:int = 0
+    best_sol:list[bool] = []
+    best_sol_eval: int = 0
+    new_temp:float = 0.0
+    '''
     
-    analyze_results.analyze_constructive()
-    analyze_results.analyze_local_search()
+    '''
+    run_experiment.run_simulated_annealing_experiment(file_names, [0, 1, 2, 3, 4, 5, 6], outer_time_limit, inner_time_limit, 3)
+    SA_time:float = time.time() - start_time
+    print(f"\nEnd of SA the experiment in {SA_time}\n")
+    '''
+
     
-    print("-"*75)
-    print("ANALYSIS COMPLETE")
-    print("-"*75)
+    run_experiment.run_genetic_algorithm_experiment(file_names, [0, 1, 2, 3, 4, 5, 6], outer_time_limit, inner_time_limit, 1, verbose=True)
+    GA_time:float = time.time() - start_time
+    print(f"\nEnd of GA the experiment in {GA_time}\n")
+    
+
+    # analyze_results.analyze_simulated_annealing()
+    #analyze_results.analyze_genetic_algorithm()
 
 if __name__ == "__main__":
     main()
