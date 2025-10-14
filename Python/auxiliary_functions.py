@@ -12,7 +12,7 @@ from typing import Any
 _evaluation_count:int = 0
 
 # Module-level GA debug state to ensure a single CSV writer/file per process
-_ga_debug_state: dict | None = None
+#_ga_debug_state: dict | None = None
 
 # 
 def reset_evaluation_count() -> None:
@@ -74,13 +74,13 @@ def register_results(results: list[list[bool]], pack_benefits:list[int], dep_siz
     pass
 
 # Load instance data from file
-def load_instance(filename: str) -> tuple[list[int], list[int], list[tuple[int, int]], int]:
+def load_instance(filename: str) -> tuple[list[int], list[int], list[tuple[int, int]], int]:    
     with open(filename, 'r') as file:
         num_pack, num_dep, num_pack_dep, capacity = map(int, file.readline().split())
         pack_benefits: list[int] = list(map(int, file.readline().split()))
         dep_sizes: list[int] = list(map(int, file.readline().split()))
         pack_dep: list[tuple[int, int]] = [(p, d) for line in file if len(line.split()) == 2 for p, d in [map(int, line.split())]]
-    return pack_benefits, dep_sizes, pack_dep, capacity
+    return (pack_benefits, dep_sizes, pack_dep, capacity)
 
 # Read last run_id from CSV, increment, return new ID
 def get_next_run_id_number(experiment_type: str, output_dir: Path) -> int:
@@ -174,7 +174,7 @@ def int_to_list_bool(sol:int) -> list[bool]:
     num_bits = max(len(bin(sol)[2:]), 1)
     return [bool(int(bit)) for bit in bin(sol)[2:].zfill(num_bits)]
 
-
+'''
 def ga_debug_report(gen: int, population: list[list[bool]], population_fitness: list[int], pack_benefits: list[int], pack_dep: list[tuple[int, int]], dep_sizes: list[int], capacity: int, verbose: bool = False, debug_state: dict | None = None, sample_n: int = 5, print_to_stdout: bool = True) -> dict | None:
     """Verbose-only GA diagnostics and optional CSV logging.
 
@@ -320,3 +320,5 @@ def ga_debug_close(debug_state: dict | None) -> None:
             _ga_debug_state = None
     except Exception:
         pass
+        
+'''

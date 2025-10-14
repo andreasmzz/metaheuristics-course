@@ -18,8 +18,8 @@ file_names:list[str] = [
     "input/sukp29_500_485_0.15_0.85.txt"        # 6
 ]
 
-BIGGER_TIME_LIMIT: float = 30.0 * 60.0 # seconds
-SMALLER_TIME_LIMIT: float = 3.5 * 60.0 # seconds
+BIGGER_TIME_LIMIT: float = 70.0 *60.0 # change only the minutes
+SMALLER_TIME_LIMIT: float = 1.5 *60.0 # change only the minutes
 
 
 
@@ -61,18 +61,23 @@ def main() -> None:
     best_sol_eval: int = 0
     new_temp:float = 0.0
     '''
-    
+
     '''
-    run_experiment.run_simulated_annealing_experiment(file_names, [0, 1, 2, 3, 4, 5, 6], outer_time_limit, inner_time_limit, 3)
+    # skiped 3, 5 and 6 - each run takes 1.5 minutes without benefit
+    run_experiment.run_simulated_annealing_experiment(file_names, [6], outer_time_limit, inner_time_limit, 3)
     SA_time:float = time.time() - start_time
     print(f"\nEnd of SA the experiment in {SA_time}\n")
     '''
 
-    
+    #analyze_results.analyze_simulated_annealing()
+    #analyze_results.analyze_genetic_algorithm()
+    analyze_results.compare_GA_SA()
+
+    '''
     run_experiment.run_genetic_algorithm_experiment(file_names, [0, 1, 2, 3, 4, 5, 6], outer_time_limit, inner_time_limit, 1, verbose=True)
     GA_time:float = time.time() - start_time
     print(f"\nEnd of GA the experiment in {GA_time}\n")
-    
+    '''
 
     # analyze_results.analyze_simulated_annealing()
     #analyze_results.analyze_genetic_algorithm()

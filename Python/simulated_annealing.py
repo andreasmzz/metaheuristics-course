@@ -14,7 +14,7 @@ BETA_DEFAULT:float = 1.125 # how temperature increases in find inital temperatur
 GAMMA_DEFAULT:float = 0.9 # acceptance rate in find initial temperature
 
 #
-def simulated_annealing(sol:list[bool], pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, neighborhood_names:list[str] = [], initial_temperature:float = INITIAL_TEMPERATURE_DEFAULT, alpha:float = ALPHA_DEFAULT, time_limit: float = TIME_LIMIT_DEFAULT, max_tries: int = MAX_TRIES_DEFAULT) -> tuple[list[bool], int, float, float]:
+def simulated_annealing(sol:list[bool], pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, neighborhood_names:list[str] = [], initial_temperature:float = INITIAL_TEMPERATURE_DEFAULT, alpha:float = ALPHA_DEFAULT, time_limit: float = TIME_LIMIT_DEFAULT, max_tries: int = MAX_TRIES_DEFAULT) -> tuple[list[bool], int, float, float, float]:
     current_sol:list[bool] = sol[:]
     current_benefit:int = evaluate_packs(pack_benefits, pack_dep, current_sol)
     tries:int = 0
@@ -34,7 +34,7 @@ def simulated_annealing(sol:list[bool], pack_benefits:list[int], dep_sizes:list[
         tries += 1
         temperature *= alpha
 
-    return (current_sol, current_benefit, initial_temperature, alpha)
+    return (current_sol, current_benefit, initial_temperature, temperature, alpha)
 
 # 
 def find_initial_temperature(sol:list[bool], pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, neighborhood_names:list[str] = [], initial_temperature:float = INITIAL_TEMPERATURE_DEFAULT, beta:float =BETA_DEFAULT, gamma:float = GAMMA_DEFAULT, time_limit: float = TIME_LIMIT_DEFAULT, max_tries: int = MAX_TRIES_DEFAULT) -> tuple[float, float, float, float]:

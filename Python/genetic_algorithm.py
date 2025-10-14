@@ -4,7 +4,7 @@ import random
 import time
 from typing import Callable
 from move import move_type, get_valid_random_move
-from auxiliary_functions import evaluate_packs, get_remaining_capacity, get_pack_dict, ga_debug_report, ga_debug_close
+from auxiliary_functions import evaluate_packs, get_remaining_capacity, get_pack_dict#, ga_debug_report, ga_debug_close
 from first_solution import create_randomic_solution
 
 GENERATIONS_DEFAULT: int = 20
@@ -34,7 +34,7 @@ def genetic_algorithm (sol:list[bool], pack_benefits: list[int], dep_sizes:list[
 
         # Delegate verbose debug printing and CSV logging to auxiliary function
         # Log diagnostics to a single CSV file but avoid printing samples to stdout
-        debug_state = ga_debug_report(gen, population, population_fitness, pack_benefits, pack_dep, dep_sizes, capacity, verbose=verbose, debug_state=debug_state, print_to_stdout=False)
+        #debug_state = ga_debug_report(gen, population, population_fitness, pack_benefits, pack_dep, dep_sizes, capacity, verbose=verbose, debug_state=debug_state, print_to_stdout=False)
 
         # Compute elite and selected parents up front
         elite:list[list[bool]] = elitism(population, population_fitness, elite_number)
@@ -106,7 +106,7 @@ def genetic_algorithm (sol:list[bool], pack_benefits: list[int], dep_sizes:list[
     parent_selection_name = list(parents_selection_dict.keys())[parent_selection_id]
     if len(population) == 0:
         # ensure debug CSV is flushed/closed
-        ga_debug_close(debug_state)
+        #ga_debug_close(debug_state)
         # return a safe, consistent tuple so the caller can handle it without crashing
         return ([], 0, sol[:], neighborhood_names, generations, elite_number,
                 parents_per_generation, parents_survive, parent_selection_name, two_offsprings, crossover_points,
@@ -114,7 +114,7 @@ def genetic_algorithm (sol:list[bool], pack_benefits: list[int], dep_sizes:list[
 
     best_index:int = max(range(len(population_fitness)), key=lambda i: population_fitness[i])
     # ensure debug CSV is flushed/closed
-    ga_debug_close(debug_state)
+    #ga_debug_close(debug_state)
     return (population[best_index][:], population_fitness[best_index], sol[:], neighborhood_names, generations, elite_number,
             parents_per_generation, parents_survive, parent_selection_name, two_offsprings, crossover_points,
             mutation, mutations_per_gene, time_limit)
