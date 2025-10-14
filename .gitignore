@@ -2,6 +2,10 @@ C++/
 c.py
 benchmark_lists.py
 Relatorio2.pdf
+test_analyze.py
+Python/test_analyze.py
+off/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
