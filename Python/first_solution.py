@@ -82,6 +82,36 @@ def create_pack_benefit_greedy_solution(pack_benefits:list[int], dep_sizes:list[
             continue
     return selec_dep
 
+# Greedy pack benefit first solution: by default biggest pack benefit first | valid solution (doesn't exceed capacity)
+# Difference with not economic: this one takes into account already selected dependencies and doesn't count them for needed space
+def create_economic_pack_benefit_greedy_solution(pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, biggest_first:bool=True)-> list[bool]:
+    free_space: int = capacity
+    selec_dep: list[bool] = [False]*len(dep_sizes)
+
+    packs: list[tuple[int, int]] = list(enumerate(pack_benefits)) # (pack_id, pack_benefit)
+    packs.sort(key=lambda x: x[1], reverse=biggest_first) # sort by benefit
+    pack_dict: dict[int, set[int]] = aux.get_pack_dict(pack_dep) # pack_id -> set of dependencies it needs
+    pack_index:int = 0
+    tries_since_last_add:int = 0
+    num_packs:int = len(packs)
+
+    while free_space > 0 and tries_since_last_add < num_packs: # stop if we have tried to add all packs without success
+        needed_deps = pack_dict.get(packs[pack_index][0], set()) # set() is the default value to be returned if pack[0] not in pack_dict
+        copy = needed_deps.copy()
+        for dep in copy:
+            if selec_dep[dep]:
+                needed_deps.remove(dep)
+        total_size_needed = sum(dep_sizes[dep] for dep in needed_deps if not selec_dep[dep])
+        if free_space - total_size_needed >= 0:
+            free_space -= total_size_needed
+            for dep in needed_deps:
+                selec_dep[dep] = True
+            tries_since_last_add = 0
+        else: # not enough space to add this package
+            tries_since_last_add += 1
+        pack_index = (pack_index + 1) % num_packs # move to next pack
+    return selec_dep
+
 # Greedy number of dependent packages first solution: by default biggest number of packs first | valid solution (doesn't exceed capacity)
 def create_num_pack_greedy_solution(pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, biggest_first:bool=True)-> list[bool]:
     free_space: int = capacity
@@ -185,6 +215,17 @@ def create_randomized_num_pack_greedy_solution(pack_benefits:list[int], dep_size
 
     return selec_dep
 
+# 
+def create_best_deterministic_first_solution(pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, biggest_first:bool=True) -> tuple[list[bool], int, str, str]:
+    solutions:list[tuple[list[bool], int, str, str]] = [] # (solution, benefit, first solution method, biggest_first)    
+    for method_name in deterministic_first_solutions_list:
+        for biggest_first in [True, False]:
+            first_sol:list[bool] = create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity, biggest_first)
+            benefit:int = aux.evaluate_packs(pack_benefits, pack_dep, first_sol)
+            solutions.append((first_sol, benefit, method_name, str(biggest_first)))
+
+    (first_sol, benefit, method_name, biggest) = max(solutions, key=lambda x: x[1])
+    return (first_sol, benefit, method_name, biggest)
 
 # Acceptable input and corresponding output types for first solution functions
 first_solution_function_type = Union[
@@ -201,6 +242,7 @@ first_solutions_dict: dict[str, first_solution_function_type] = {
     "create_ratio_greedy_solution": create_ratio_greedy_solution,
     "create_dep_size_greedy_solution": create_dep_size_greedy_solution,
     "create_pack_benefit_greedy_solution": create_pack_benefit_greedy_solution,
+    #"create_economic_pack_benefit_greedy_solution": create_economic_pack_benefit_greedy_solution,
     "create_num_pack_greedy_solution": create_num_pack_greedy_solution,
     "create_randomized_ratio_greedy_solution": create_randomized_ratio_greedy_solution,
     "create_randomized_dep_size_greedy_solution": create_randomized_dep_size_greedy_solution,
@@ -213,6 +255,7 @@ deterministic_first_solutions_list: list[str] = [
     "create_ratio_greedy_solution",
     "create_dep_size_greedy_solution",
     "create_pack_benefit_greedy_solution",
+    #"create_economic_pack_benefit_greedy_solution",
     "create_num_pack_greedy_solution"
 ]
 
@@ -231,6 +274,7 @@ first_solutions_list:list = [
     "create_ratio_greedy_solution",
     "create_dep_size_greedy_solution",
     "create_pack_benefit_greedy_solution",
+    #"create_economic_pack_benefit_greedy_solution",
     "create_num_pack_greedy_solution",
     "create_randomized_ratio_greedy_solution",
     "create_randomized_dep_size_greedy_solution",

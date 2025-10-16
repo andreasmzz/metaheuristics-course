@@ -17,7 +17,7 @@ import genetic_algorithm as ga
 # Configuration
 OUTPUT_DIR: Path = Path("output/experiments")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
+    
 # Run all constructive method experiments and save to .csv -> First report
 def run_constructive_experiment(files:list[str], files_to_run: list[int]) -> None:
     for file_id in files_to_run:
@@ -39,30 +39,31 @@ def run_constructive_experiment(files:list[str], files_to_run: list[int]) -> Non
         ]
         
         for method_name in fs.deterministic_first_solutions_list:
-            aux.reset_evaluation_count()
-            start_time: float = time.time()
-            
-            solution: list[bool] = fs.create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity, "default")
-            
-            elapsed: float = time.time() - start_time
-            benefit: int = aux.evaluate_packs(pack_benefits, pack_dep, solution)
-            evals: int = aux.get_evaluation_count()
-            capacity_used: int = capacity - aux.get_remaining_capacity(dep_sizes, solution, capacity)
-            
-            results.append({
-                "run_id": f"constructive_{run_id}",
-                "instance_file": files[file_id],
-                "method": method_name,
-                "params": "default",
-                "seed": None,
-                "benefit": benefit,
-                "time": elapsed,
-                "evaluations": evals,
-                "capacity_used": capacity_used,
-                "timestamp": datetime.now().isoformat()
-            })
-            print(f"  [{run_id}] {method_name} default - Benefit: {benefit}")
-            run_id += 1
+            for biggest_first in [True, False]:
+                aux.reset_evaluation_count()
+                start_time: float = time.time()
+                
+                solution: list[bool] = fs.create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity, biggest_first)
+                
+                elapsed: float = time.time() - start_time
+                benefit: int = aux.evaluate_packs(pack_benefits, pack_dep, solution)
+                evals: int = aux.get_evaluation_count()
+                capacity_used: int = capacity - aux.get_remaining_capacity(dep_sizes, solution, capacity)
+                
+                results.append({
+                    "run_id": f"constructive_{run_id}",
+                    "instance_file": files[file_id],
+                    "method": method_name,
+                    "params": "biggest_first=" + str(biggest_first),
+                    "seed": None,
+                    "benefit": benefit,
+                    "time": elapsed,
+                    "evaluations": evals,
+                    "capacity_used": capacity_used,
+                    "timestamp": datetime.now().isoformat()
+                })
+                print(f"  [{run_id}] {method_name} default - Benefit: {benefit}")
+                run_id += 1
         
         # Randomized methods - 30 runs each
         randomized_methods: list[str] = [
@@ -74,33 +75,34 @@ def run_constructive_experiment(files:list[str], files_to_run: list[int]) -> Non
         ]
         
         for method_name in fs.randomized_first_solutions_list:
-            print(f"  Running {method_name} - 30 runs...")
-            for seed in range(30):
-                random.seed(seed)
-                aux.reset_evaluation_count()
-                start_time = time.time()
-                
-                solution = fs.create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity)
-                
-                elapsed = time.time() - start_time
-                benefit = aux.evaluate_packs(pack_benefits, pack_dep, solution)
-                evals = aux.get_evaluation_count()
-                capacity_used = capacity - aux.get_remaining_capacity(dep_sizes, solution, capacity)
-                
-                results.append({
-                    "run_id": f"constructive_{run_id}",
-                    "instance_file": files[file_id],
-                    "method": method_name,
-                    "params": "{}",
-                    "seed": seed,
-                    "benefit": benefit,
-                    "time": elapsed,
-                    "evaluations": evals,
-                    "capacity_used": capacity_used,
-                    "timestamp": datetime.now().isoformat()
-                })
-                run_id += 1
-            print(f"    Completed 30 runs for {method_name}")
+            for biggest_first in [True, False]:
+                print(f"  Running {method_name} - 30 runs...")
+                for seed in range(30):
+                    random.seed(seed)
+                    aux.reset_evaluation_count()
+                    start_time = time.time()
+                    
+                    solution = fs.create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity)
+                    
+                    elapsed = time.time() - start_time
+                    benefit = aux.evaluate_packs(pack_benefits, pack_dep, solution)
+                    evals = aux.get_evaluation_count()
+                    capacity_used = capacity - aux.get_remaining_capacity(dep_sizes, solution, capacity)
+                    
+                    results.append({
+                        "run_id": f"constructive_{run_id}",
+                        "instance_file": files[file_id],
+                        "method": method_name,
+                        "params": "biggest_first=" + str(biggest_first),
+                        "seed": seed,
+                        "benefit": benefit,
+                        "time": elapsed,
+                        "evaluations": evals,
+                        "capacity_used": capacity_used,
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    run_id += 1
+                print(f"    Completed 30 runs for {method_name}")
         
         # Save to .csv
         aux.append_to_csv("constructive", results, OUTPUT_DIR)
@@ -242,11 +244,14 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
     run_with_initial_temp:bool = False # if false: will use useful_temp found in first run per file-parameters
     
     # Parameters to be tested:
-    test_alpha:list[float] = [0.95, 0.75]
-    test_beta:list[float] = [1.5, 2.0]
-    test_gamma:list[float] = [0.9, 0.8]
-    test_initial_temp:list[int] = [1000, 500]
-
+#    test_alpha:list[float] = [0.95, 0.75]
+#    test_beta:list[float] = [1.5, 2.0]
+#    test_gamma:list[float] = [0.9, 0.8]
+#    test_initial_temp:list[int] = [1000, 500]
+    test_alpha:list[float] = [0.95]
+    test_beta:list[float] = [1.5]
+    test_gamma:list[float] = [0.9]
+    test_initial_temp:list[int] = [1000]
 
     for file_id in files_to_run:
         if outer_time_limit < time.time() - outer_start_time: break
@@ -268,14 +273,17 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
                         for run in range(runs_per_file):
                             inner_start_time:float = time.time()
                             if outer_time_limit < time.time() - outer_start_time or inner_time_limit < time.time() -  inner_start_time: break
+                            
+                            run_id: int = aux.get_next_run_id_number("simulated_annealing", OUTPUT_DIR)
                             run_seed: int = aux.get_next_seed_per_file_name("simulated_annealing", files[file_id], OUTPUT_DIR)
                             random.seed(run_seed)
                             aux.reset_evaluation_count()
                         
+                            first_sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity)
 
                             if run_with_initial_temp or run == 0:
                                 (useful_temp, starting_temperature, beta, gamma) = sa.find_initial_temperature(
-                                        sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity),
+                                        sol = first_sol,
                                         pack_benefits = pack_benefits,
                                         dep_sizes = dep_sizes,
                                         pack_dep = pack_dep,
@@ -283,10 +291,10 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
                                         beta = beta,
                                         gamma = gamma,
                                         initial_temperature = initial_temp,
-                                        time_limit = inner_time_limit - time.time() + inner_start_time)
+                                        time_limit = (inner_time_limit - time.time() + inner_start_time)/2) # half time for finding initial temp
 
                             (solution, benefit, initial_temperature, final_temperature, alpha) = sa.simulated_annealing(
-                                sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity),
+                                sol = first_sol,
                                 pack_benefits = pack_benefits,
                                 dep_sizes = dep_sizes,
                                 pack_dep = pack_dep,
@@ -306,6 +314,7 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
                                 "run_seed": run_seed,
                                 "solution": aux.list_bool_to_int(solution),
                                 "benefit": benefit,
+                                "first_solution": "random",
                                 "starting_find_temp": starting_temperature, # tracking find temperature is that important? # type: ignore
                                 "initial_temp": initial_temperature,
                                 "final_temp": final_temperature,

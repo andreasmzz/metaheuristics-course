@@ -4,9 +4,12 @@ import time
 
 import auxiliary_functions as aux
 import move as move
+import first_solution as fs
+import simulated_annealing as sa
 import run_experiment
 import analyze_results
 
+import dp
 
 file_names:list[str] = [
     "input/prob-software-85-100-812-12180.txt", # 0
@@ -18,7 +21,7 @@ file_names:list[str] = [
     "input/sukp29_500_485_0.15_0.85.txt"        # 6
 ]
 
-BIGGER_TIME_LIMIT: float = 70.0 *60.0 # change only the minutes
+BIGGER_TIME_LIMIT: float = 120.0 *60.0 # change only the minutes
 SMALLER_TIME_LIMIT: float = 1.5 *60.0 # change only the minutes
 
 
@@ -53,25 +56,99 @@ def main() -> None:
     outer_time_limit:float = BIGGER_TIME_LIMIT
     inner_time_limit: float = SMALLER_TIME_LIMIT
 
-    '''
+    
     # for test only use
-    pack_benefits, dep_sizes, pack_dep, capacity = aux.load_instance(file_names[1])
+    pack_benefits, dep_sizes, pack_dep, capacity = aux.load_instance(file_names[3])
     count:int = 0
     best_sol:list[bool] = []
     best_sol_eval: int = 0
     new_temp:float = 0.0
     '''
+    new_sol:list[bool] = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity)
+    
+    new_sol:list[bool] = [False for i in range(len(dep_sizes))]
+    space_left:int = capacity
+    for (pack, dep) in pack_dep:
+        if space_left > dep_sizes[dep]:
+            if not new_sol[dep]:
+                new_sol[dep] = True
+                space_left -= dep_sizes[dep]
+
+    
+    print("Packages benefits: ", pack_benefits)
+    print("\nDependencies sizes: ", dep_sizes)
+    #print("\nPackage and one of its dependencies: ", pack_dep)
+    print("Disk capacity: ", capacity)
+    
+    print("\nFirst solution: ", (new_sol))
+    print("\nBenefits: ", aux.evaluate_packs(pack_benefits, pack_dep, new_sol))
+    print("Space left: ", aux.get_remaining_capacity(dep_sizes, new_sol, capacity))
+    '''
+
+    # problematic instances: 3, 5 and 6
+
+    run_experiment.run_simulated_annealing_experiment(file_names, [3, 5, 6], outer_time_limit, inner_time_limit, 1)
+
+    '''
+    # Perfect solution
+    #sol = dp.solve_sukp(pack_benefits, dep_sizes, pack_dep, capacity)
+    #print("For the perfect solution")
+    #print(f"Sol: {aux.list_bool_to_int(sol)}\n\tBenefict: {aux.evaluate_packs(pack_benefits, pack_dep, sol)}\n\n")
+
+    print("TEST FOR FIRST SOLUTIONS\n")
+
+    # RATIO GREDDY
+    sol1 = fs.create_ratio_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, False) # terrible - 0
+    sol2 = fs.create_ratio_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, True) # terrible - 748
+
+    print("For create greedy solution")
+    print(f"For sol1: \n\tSol: {aux.list_bool_to_int(sol1)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol1)}")
+    print(f"For sol2: \n\tSol: {aux.list_bool_to_int(sol2)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol2)}\n\n")
+    
+    # DEP SIZE
+    sol1 = fs.create_dep_size_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, False) # baD - 1032
+    sol2 = fs.create_dep_size_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, True) # terrible - 0 
+
+    print("For create dep size greddy solution")
+    print(f"For sol1: \n\tSol: {aux.list_bool_to_int(sol1)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol1)}")
+    print(f"For sol2: \n\tSol: {aux.list_bool_to_int(sol2)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol2)}\n\n")
+
+    # PACK BENEFIT
+    sol1 = fs.create_pack_benefit_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, False) # bad - 1109
+    sol2 = fs.create_pack_benefit_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, True) # acceptable - 6983
+
+    print("For create pack benefit greddy solution")
+    print(f"For sol1: \n\tSol: {aux.list_bool_to_int(sol1)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol1)}")
+    print(f"For sol2: \n\tSol: {aux.list_bool_to_int(sol2)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol2)}\n\n")
+
+    # ECONOMIC PACK BENEFIT
+    sol1 = fs.create_economic_pack_benefit_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, False) # bad 1109
+    sol2 = fs.create_economic_pack_benefit_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, True) # acceptable - 6983
+
+    print("For create economic pack benefit greddy solution")
+    print(f"For sol1: \n\tSol: {aux.list_bool_to_int(sol1)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol1)}")
+    print(f"For sol2: \n\tSol: {aux.list_bool_to_int(sol2)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol2)}\n\n")
+
+    # NUM PACK
+    sol1 = fs.create_num_pack_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, False) # terrible - 0
+    sol2 = fs.create_num_pack_greedy_solution(pack_benefits, dep_sizes, pack_dep, capacity, True) # terrible - 0
+    print("For num pack greedy solution")
+    print(f"For sol1: \n\tSol: {aux.list_bool_to_int(sol1)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol1)}")
+    print(f"For sol2: \n\tSol: {aux.list_bool_to_int(sol2)}\n\tBenefit: {aux.evaluate_packs(pack_benefits, pack_dep, sol2)}\n\n")
+    '''
+
+
+    #(initial_temp, start_temp, beta, gamma) = sa.find_initial_temperature(new_sol, pack_benefits, dep_sizes, pack_dep, capacity)
+    #print(f"found temp: {initial_temp}, start temp: {start_temp}, beta: {beta}, gamma: {gamma}")
+    #(found_sol, ) = sa.simulated_annealing(new_sol, pack_benefits, dep_sizes, pack_dep, capacity)
+
 
     '''
     # skiped 3, 5 and 6 - each run takes 1.5 minutes without benefit
-    run_experiment.run_simulated_annealing_experiment(file_names, [6], outer_time_limit, inner_time_limit, 3)
+    run_experiment.run_simulated_annealing_experiment(file_names, [3,5,6], outer_time_limit, inner_time_limit, 3)
     SA_time:float = time.time() - start_time
     print(f"\nEnd of SA the experiment in {SA_time}\n")
     '''
-
-    #analyze_results.analyze_simulated_annealing()
-    #analyze_results.analyze_genetic_algorithm()
-    analyze_results.compare_GA_SA()
 
     '''
     run_experiment.run_genetic_algorithm_experiment(file_names, [0, 1, 2, 3, 4, 5, 6], outer_time_limit, inner_time_limit, 1, verbose=True)
@@ -79,8 +156,10 @@ def main() -> None:
     print(f"\nEnd of GA the experiment in {GA_time}\n")
     '''
 
-    # analyze_results.analyze_simulated_annealing()
+    #analyze_results.analyze_simulated_annealing()
     #analyze_results.analyze_genetic_algorithm()
+    #analyze_results.compare_GA_SA()
+
 
 if __name__ == "__main__":
     main()
