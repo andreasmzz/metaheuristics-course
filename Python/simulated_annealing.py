@@ -48,11 +48,11 @@ def find_initial_temperature(sol:list[bool], pack_benefits:list[int], dep_sizes:
         for tries in range (max_tries):
             if time.time() - start_time >= time_limit: print("Expired time - find_initial_temperature"); break
             new_move:move_type = get_valid_random_move(current_sol, neighborhood_names)
-            if new_move[1] == "error": continue # couldn't find a new solution
+            if new_move[1] == "error": print("new move is error"); continue # couldn't find a new solution
             if get_remaining_capacity(dep_sizes, new_move[0], capacity) < 0: continue # invalid solution
             new_benefit:int = evaluate_packs(pack_benefits, pack_dep, new_move[0])
             delta:int = new_benefit - current_benefit
-            print(f"try number: {tries}, current benefit:{current_benefit}, new tested benefit: {new_benefit}, delta: {delta}")
+            #print(f"try number: {tries}, current benefit:{current_benefit}, new tested benefit: {new_benefit}, delta: {delta}")
             if delta > 0 or random.random() < min(1, e**(delta / current_temp)): 
                 accepted += 1
                 current_sol = new_move[0]

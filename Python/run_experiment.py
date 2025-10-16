@@ -248,7 +248,7 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
 #    test_beta:list[float] = [1.5, 2.0]
 #    test_gamma:list[float] = [0.9, 0.8]
 #    test_initial_temp:list[int] = [1000, 500]
-    test_alpha:list[float] = [0.95]
+    test_alpha:list[float] = [0.999]
     test_beta:list[float] = [1.5]
     test_gamma:list[float] = [0.9]
     test_initial_temp:list[int] = [1000]

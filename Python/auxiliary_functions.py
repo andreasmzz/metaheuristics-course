@@ -152,28 +152,32 @@ def append_to_csv(experiment_type: str, new_results: list[dict[str, Any]], outpu
 # 
 def list_bool_to_int(sol:list[bool]) -> int:
     # Defensive: if sol is None or empty, return 0
-    if sol is None:
+    if sol is None or len(sol) == 0:
         return 0
-    if len(sol) == 0:
-        return 0
-
-    # Build bitstring safely and convert. Use a fallback integer build to avoid
-    # ValueError from int('', 2) in edge cases.
-    try:
-        bits: str = "".join(str(int(bool(b))) for b in sol)
-        return int(bits, 2) if bits else 0
-    except Exception:
-        # Fallback: compute integer by shifting bits (most-significant-bit first)
-        val: int = 0
-        for b in sol:
-            val = (val << 1) | (1 if b else 0)
-        return val
+    val: int = 0
+    for bit in sol:
+        val = (val << 1) | (1 if bit else 0)
+    return val
 
 #
-def int_to_list_bool(sol:int) -> list[bool]:
-    num_bits = max(len(bin(sol)[2:]), 1)
+def list_bool_to_list_int(sol:list[bool]) -> list[int]:
+    return [1 if bit else 0 for bit in sol]
+
+#
+def int_to_list_bool(sol:int, length:int = 0) -> list[bool]:
+    if length > 0:
+        num_bits = length
+    else:
+        num_bits = max(len(bin(sol)[2:]), 1)
     return [bool(int(bit)) for bit in bin(sol)[2:].zfill(num_bits)]
 
+# 
+def int_to_list_int(sol:int, length:int = 0) -> list[int]:
+    if length > 0:
+        num_bits = length
+    else:
+        num_bits = max(len(bin(sol)[2:]), 1)
+    return [int(bit) for bit in bin(sol)[2:].zfill(num_bits)]
 '''
 def ga_debug_report(gen: int, population: list[list[bool]], population_fitness: list[int], pack_benefits: list[int], pack_dep: list[tuple[int, int]], dep_sizes: list[int], capacity: int, verbose: bool = False, debug_state: dict | None = None, sample_n: int = 5, print_to_stdout: bool = True) -> dict | None:
     """Verbose-only GA diagnostics and optional CSV logging.

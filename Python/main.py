@@ -63,7 +63,22 @@ def main() -> None:
     best_sol:list[bool] = []
     best_sol_eval: int = 0
     new_temp:float = 0.0
+
+    for i in range(3):
+
+        new_sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity) # list[bool]
+        length = len(new_sol)
+        bool_list_int = aux.list_bool_to_int(new_sol) # int
+        int_bool_list = aux.int_to_list_bool(bool_list_int, length) # list[bool]
+        new_bool_list_int = aux.list_bool_to_int(int_bool_list) # int
+        bool_list_int_list = aux.list_bool_to_list_int(new_sol) # list[int]
+        int_int_list = aux.int_to_list_int(bool_list_int, length) # list[int]
+        print(f"\nnew_sol == int_bool_list {new_sol == int_bool_list}")
+        print(f"bool_list_int == new_bool_list_int {bool_list_int == new_bool_list_int}")
+        print(f"bool_list_int_list == int_int_list {bool_list_int_list == int_int_list}\n")
+
     '''
+    
     new_sol:list[bool] = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity)
     
     new_sol:list[bool] = [False for i in range(len(dep_sizes))]
@@ -87,7 +102,7 @@ def main() -> None:
 
     # problematic instances: 3, 5 and 6
 
-    run_experiment.run_simulated_annealing_experiment(file_names, [3, 5, 6], outer_time_limit, inner_time_limit, 1)
+    #run_experiment.run_simulated_annealing_experiment(file_names, [3, 5, 6], outer_time_limit, inner_time_limit, 5)
 
     '''
     # Perfect solution
