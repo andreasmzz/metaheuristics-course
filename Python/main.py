@@ -1,6 +1,7 @@
 # Python 3.13.4
 
 import time
+import pprint
 
 import auxiliary_functions as aux
 import move as move
@@ -10,6 +11,13 @@ import run_experiment
 import analyze_results
 
 import dp
+
+csv_files_paths:list[str] = [
+    "output/experiments/constructive.csv",
+    "output/experiments/local_search.csv",
+    "output/experiments/simulated_annealing.csv",
+    "output/experiments/genetic_algorithm.csv"
+]
 
 file_names:list[str] = [
     "input/prob-software-85-100-812-12180.txt", # 0
@@ -64,18 +72,9 @@ def main() -> None:
     best_sol_eval: int = 0
     new_temp:float = 0.0
 
-    for i in range(3):
-
-        new_sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity) # list[bool]
-        length = len(new_sol)
-        bool_list_int = aux.list_bool_to_int(new_sol) # int
-        int_bool_list = aux.int_to_list_bool(bool_list_int, length) # list[bool]
-        new_bool_list_int = aux.list_bool_to_int(int_bool_list) # int
-        bool_list_int_list = aux.list_bool_to_list_int(new_sol) # list[int]
-        int_int_list = aux.int_to_list_int(bool_list_int, length) # list[int]
-        print(f"\nnew_sol == int_bool_list {new_sol == int_bool_list}")
-        print(f"bool_list_int == new_bool_list_int {bool_list_int == new_bool_list_int}")
-        print(f"bool_list_int_list == int_int_list {bool_list_int_list == int_int_list}\n")
+    for csv_file in csv_files_paths:
+        print(f"\nPrinting for {csv_file}\n")
+        pprint.pprint(aux.get_best_benefit_row_per_instance(csv_file))
 
     '''
     

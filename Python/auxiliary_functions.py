@@ -150,6 +150,30 @@ def append_to_csv(experiment_type: str, new_results: list[dict[str, Any]], outpu
         writer.writerows(new_results)
 
 # 
+def get_best_benefit_row_per_instance(file_path: str, instance_column:str = "instance_file", benefit_column:str = "benefit") -> dict[str, dict[str, Any]]:
+    best_rows: dict[str, dict[str, Any]] = {}
+    
+    if not Path(file_path).exists():
+        return best_rows
+    
+    with open(file_path, "r") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            instance_file = row.get(instance_column)
+            
+            if instance_file is None:
+                continue
+            try:
+                benefit = int(row.get(benefit_column, "0"))
+            except ValueError:
+                benefit = 0
+            if instance_file not in best_rows or benefit > int(best_rows[instance_file].get(benefit_column, "0")):
+                best_rows[instance_file] = row
+                
+    return best_rows
+
+
+# 
 def list_bool_to_int(sol:list[bool]) -> int:
     # Defensive: if sol is None or empty, return 0
     if sol is None or len(sol) == 0:

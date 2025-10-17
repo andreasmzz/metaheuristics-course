@@ -1,4 +1,4 @@
-run_id,instance_file,ls_method,refinement_heuristics,neighborhoods,initial_method,seed,initial_benefit,final_benefit,improvement,improvement_pct,capacity_remaining,time,evaluations,timestamp
+run_id,instance_file,ls_method,refinement_heuristics,neighborhoods,initial_method,seed,initial_benefit,benefit,improvement,improvement_pct,capacity_remaining,time,evaluations,timestamp
 local_search_1,input/prob-software-85-100-812-12180.txt,hill_climbing,['random_best_step'],"['flip_bit', 'swap_bits']",create_ratio_greedy_solution,0,8107,10114,2007,24.75638337239423,17,3.7152204513549805,2417,2025-10-05T14:53:26.238020
 local_search_2,input/prob-software-85-100-812-12180.txt,hill_climbing,['random_best_step'],"['flip_bit', 'swap_bits']",create_ratio_greedy_solution,1,8107,9660,1553,19.15628469224127,2,4.786320447921753,3095,2025-10-05T14:53:31.028429
 local_search_3,input/prob-software-85-100-812-12180.txt,hill_climbing,['random_best_step'],"['flip_bit', 'swap_bits']",create_ratio_greedy_solution,2,8107,10239,2132,26.29826076230418,31,5.536533355712891,3563,2025-10-05T14:53:36.568556
