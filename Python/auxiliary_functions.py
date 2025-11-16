@@ -12,7 +12,7 @@ from typing import Any
 _evaluation_count:int = 0
 
 # Module-level GA debug state to ensure a single CSV writer/file per process
-#_ga_debug_state: dict | None = None
+_ga_debug_state: dict | None = None
 
 # 
 def reset_evaluation_count() -> None:
@@ -74,13 +74,13 @@ def register_results(results: list[list[bool]], pack_benefits:list[int], dep_siz
     pass
 
 # Load instance data from file
-def load_instance(filename: str) -> tuple[list[int], list[int], list[tuple[int, int]], int]:    
+def load_instance(filename: str) -> tuple[list[int], list[int], list[tuple[int, int]], int]:
     with open(filename, 'r') as file:
         num_pack, num_dep, num_pack_dep, capacity = map(int, file.readline().split())
         pack_benefits: list[int] = list(map(int, file.readline().split()))
         dep_sizes: list[int] = list(map(int, file.readline().split()))
         pack_dep: list[tuple[int, int]] = [(p, d) for line in file if len(line.split()) == 2 for p, d in [map(int, line.split())]]
-    return (pack_benefits, dep_sizes, pack_dep, capacity)
+    return pack_benefits, dep_sizes, pack_dep, capacity
 
 # Read last run_id from CSV, increment, return new ID
 def get_next_run_id_number(experiment_type: str, output_dir: Path) -> int:
@@ -150,58 +150,73 @@ def append_to_csv(experiment_type: str, new_results: list[dict[str, Any]], outpu
         writer.writerows(new_results)
 
 # 
-def get_best_benefit_row_per_instance(file_path: str, instance_column:str = "instance_file", benefit_column:str = "benefit") -> dict[str, dict[str, Any]]:
-    best_rows: dict[str, dict[str, Any]] = {}
-    
-    if not Path(file_path).exists():
-        return best_rows
-    
-    with open(file_path, "r") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            instance_file = row.get(instance_column)
-            
-            if instance_file is None:
-                continue
-            try:
-                benefit = int(row.get(benefit_column, "0"))
-            except ValueError:
-                benefit = 0
-            if instance_file not in best_rows or benefit > int(best_rows[instance_file].get(benefit_column, "0")):
-                best_rows[instance_file] = row
-                
-    return best_rows
-
-
-# 
 def list_bool_to_int(sol:list[bool]) -> int:
     # Defensive: if sol is None or empty, return 0
-    if sol is None or len(sol) == 0:
+    if sol is None:
         return 0
-    val: int = 0
-    for bit in sol:
-        val = (val << 1) | (1 if bit else 0)
-    return val
+    if len(sol) == 0:
+        return 0
 
-#
-def list_bool_to_list_int(sol:list[bool]) -> list[int]:
-    return [1 if bit else 0 for bit in sol]
+    # Build bitstring safely and convert. Use a fallback integer build to avoid
+    # ValueError from int('', 2) in edge cases.
+    try:
+        bits: str = "".join(str(int(bool(b))) for b in sol)
+        return int(bits, 2) if bits else 0
+    except Exception:
+        # Fallback: compute integer by shifting bits (most-significant-bit first)
+        val: int = 0
+        for b in sol:
+            val = (val << 1) | (1 if b else 0)
+        return val
 
 #
 def int_to_list_bool(sol:int, length:int = 0) -> list[bool]:
+    """Convert integer `sol` to list[bool].
+
+    If `length` > 0, the returned list is padded/truncated to that exact
+    length (most-significant bit first). This ensures the boolean list can
+    be directly used with `dep_sizes` lists of a given length.
+    """
     if length > 0:
         num_bits = length
     else:
         num_bits = max(len(bin(sol)[2:]), 1)
     return [bool(int(bit)) for bit in bin(sol)[2:].zfill(num_bits)]
 
-# 
+#
 def int_to_list_int(sol:int, length:int = 0) -> list[int]:
     if length > 0:
         num_bits = length
     else:
         num_bits = max(len(bin(sol)[2:]), 1)
     return [int(bit) for bit in bin(sol)[2:].zfill(num_bits)]
+
+
+def list_bool_to_list_int(sol: list[bool]) -> list[int]:
+    """Convert list of bools to list of ints (1/0)."""
+    if sol is None:
+        return []
+    return [1 if bit else 0 for bit in sol]
+
+
+def pack_from_dep_list_bool(dep_sol:list[bool], pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int) -> list[bool]:
+    """Return a list indicating which packs are satisfied by the selected dependencies.
+
+    This mirrors previous helper behaviour: for each pack, mark True if all
+    its required dependencies are selected in `dep_sol`.
+    """
+    pack_all_deps: dict[int, set[int]] = get_pack_dict(pack_dep)
+    pack_sol: list[bool] = [False] * len(pack_benefits)
+    # compute selected dependency indices once
+    selected_set = set(i for i, v in enumerate(dep_sol) if v)
+
+    for pack in range(len(pack_benefits)):
+        required = pack_all_deps.get(pack, set())
+        if required.issubset(selected_set):
+            pack_sol[pack] = True
+
+    return pack_sol
+
 '''
 def ga_debug_report(gen: int, population: list[list[bool]], population_fitness: list[int], pack_benefits: list[int], pack_dep: list[tuple[int, int]], dep_sizes: list[int], capacity: int, verbose: bool = False, debug_state: dict | None = None, sample_n: int = 5, print_to_stdout: bool = True) -> dict | None:
     """Verbose-only GA diagnostics and optional CSV logging.
@@ -348,5 +363,4 @@ def ga_debug_close(debug_state: dict | None) -> None:
             _ga_debug_state = None
     except Exception:
         pass
-        
 '''

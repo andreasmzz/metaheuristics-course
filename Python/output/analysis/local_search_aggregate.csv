@@ -1,0 +1,5 @@
+config,instances,median_of_medians,wins
+"variable_neighborhood_descent | random_best_step,first_best_step | flip_bit,swap_bits",4,6731.5,4
+"hill_climbing | random_best_step | flip_bit,swap_bits",4,6185.75,2
+hill_climbing | first_best_step | flip_bit,4,4888.0,0
+variable_neighborhood_descent | absolute_best_step | flip_bit,4,4888.0,0

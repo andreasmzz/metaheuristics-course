@@ -8,17 +8,17 @@ from typing import Callable, Union
 ''' !!! Notice !!! '''
 # New create[...] functions must be added to the first_solutions dictionary at the bottom of this file
 
-''' Constructive heuristic solution '''
+''' Constructive solution '''
 
-# Dispatch function to select and execute the desired heuristic from first_solutions dictionary
-def create_first_solution(heuristic_name:str, pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, *args) -> list[bool]:
-    if heuristic_name not in first_solutions_dict:
-        raise ValueError(f"Heuristic '{heuristic_name}' not recognized. Available heuristics: {list(first_solutions_dict.keys())}")
-    return first_solutions_dict[heuristic_name](pack_benefits, dep_sizes, pack_dep, capacity, *args)
+# Dispatch function to select and execute the desired method from first_solutions dictionary
+def create_first_solution(method_name:str, pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, *args) -> list[bool]:
+    if method_name not in first_solutions_dict:
+        raise ValueError(f"Method '{method_name}' not recognized. Available methods: {list(first_solutions_dict.keys())}")
+    return first_solutions_dict[method_name](pack_benefits, dep_sizes, pack_dep, capacity, *args)
 
 
 # Randomic first solution: always returns a valid solution (doesn't exceed capacity)
-def create_randomic_solution(pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int) -> list[bool]:
+def create_randomic_solution(pack_benefits:list[int], dep_sizes:list[int], pack_dep:list[tuple[int, int]], capacity:int, args) -> list[bool]:
     free_space: int = capacity
     selec_dep: list[bool] = [False]*len(dep_sizes)
     deps: list[tuple[int, int]] = list(enumerate(dep_sizes)) # (dep_id, dep_size)
@@ -281,3 +281,4 @@ first_solutions_list:list = [
     "create_randomized_pack_benefit_greedy_solution",
     "create_randomized_num_pack_greedy_solution"
 ]
+

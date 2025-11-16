@@ -1,4 +1,5 @@
 # Python 3.13.4
+# -*- coding: utf-8 -*-
 
 import random
 import time
@@ -7,12 +8,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import move
 import first_solution as fs
 import auxiliary_functions as aux
 import local_search as ls
 import refinement_heuristic as rh
 import simulated_annealing as sa
 import genetic_algorithm as ga
+import iterated_local_search as ils
 
 # Configuration
 OUTPUT_DIR: Path = Path("output/experiments")
@@ -50,12 +53,18 @@ def run_constructive_experiment(files:list[str], files_to_run: list[int]) -> Non
                 evals: int = aux.get_evaluation_count()
                 capacity_used: int = capacity - aux.get_remaining_capacity(dep_sizes, solution, capacity)
                 
+                
+                print(f"File-id:{file_id}\tmethod:{method_name}\tbenefit:{benefit}\tsol:{aux.list_bool_to_list_int(aux.pack_from_dep_list_bool(solution, pack_benefits, dep_sizes, pack_dep, capacity))}")
+
+
+
                 results.append({
                     "run_id": f"constructive_{run_id}",
                     "instance_file": files[file_id],
                     "method": method_name,
                     "params": "biggest_first=" + str(biggest_first),
                     "seed": None,
+                    "solution": aux.list_bool_to_int(solution),
                     "benefit": benefit,
                     "time": elapsed,
                     "evaluations": evals,
@@ -82,19 +91,26 @@ def run_constructive_experiment(files:list[str], files_to_run: list[int]) -> Non
                     aux.reset_evaluation_count()
                     start_time = time.time()
                     
-                    solution = fs.create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity)
+                    solution = fs.create_first_solution(method_name, pack_benefits, dep_sizes, pack_dep, capacity, 1)
                     
                     elapsed = time.time() - start_time
                     benefit = aux.evaluate_packs(pack_benefits, pack_dep, solution)
                     evals = aux.get_evaluation_count()
                     capacity_used = capacity - aux.get_remaining_capacity(dep_sizes, solution, capacity)
                     
+
+                    if benefit > 0:
+                        print(f"File-id:{file_id}\tmethod:{method_name}\tbenefit:{benefit}\tsol:{aux.list_bool_to_list_int(aux.pack_from_dep_list_bool(solution, pack_benefits, dep_sizes, pack_dep, capacity))}")
+
+
+
                     results.append({
                         "run_id": f"constructive_{run_id}",
                         "instance_file": files[file_id],
                         "method": method_name,
                         "params": "biggest_first=" + str(biggest_first),
                         "seed": seed,
+                        "solution": aux.list_bool_to_int(solution),
                         "benefit": benefit,
                         "time": elapsed,
                         "evaluations": evals,
@@ -110,7 +126,7 @@ def run_constructive_experiment(files:list[str], files_to_run: list[int]) -> Non
     print(f" OK Constructive experiments complete! Saved to constructive.csv\n")
 
 # Runs a specific set of 4 runs and saves to .csv -> Second report
-def run_local_search_experiment(files:list[str], files_to_run: list[int]) -> None:
+def run_local_search_experiment(files:list[str], files_to_run: list[int], runs_per_file: int) -> None:
     print("Starting local search experiments...")
     for file_id in files_to_run:
         pack_benefits, dep_sizes, pack_dep, capacity = aux.load_instance(files[file_id])
@@ -148,9 +164,9 @@ def run_local_search_experiment(files:list[str], files_to_run: list[int]) -> Non
         
         for exp in experiments:
             label: str = f"{exp['ls_method']}_{'_'.join(exp['refinement_names'])}_{'_'.join(exp['neighborhoods'])}"
-            print(f"  Running {label} - 30 runs...")
+            print(f"  Running {label} - {runs_per_file} runs...")
             
-            for seed in range(30):
+            for seed in range(runs_per_file):
                 random.seed(seed)
                 aux.reset_evaluation_count()
                 
@@ -227,7 +243,7 @@ def run_local_search_experiment(files:list[str], files_to_run: list[int]) -> Non
                     "timestamp": datetime.now().isoformat()
                 })
                 run_id += 1
-            print(f"    Completed 30 runs for {exp["ls_method"]}")
+            print(f"    Completed {runs_per_file} runs for {exp['ls_method']}")
         
         # Save to .csv
         aux.append_to_csv("local_search", results, OUTPUT_DIR)
@@ -248,10 +264,10 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
 #    test_beta:list[float] = [1.5, 2.0]
 #    test_gamma:list[float] = [0.9, 0.8]
 #    test_initial_temp:list[int] = [1000, 500]
-    test_alpha:list[float] = [0.999]
+    test_alpha:list[float] = [0.9]
     test_beta:list[float] = [1.5]
-    test_gamma:list[float] = [0.9]
-    test_initial_temp:list[int] = [1000]
+    test_gamma:list[float] = [0.9, 0.8]
+    test_initial_temp:list[int] = [1000, 1500]
 
     for file_id in files_to_run:
         if outer_time_limit < time.time() - outer_start_time: break
@@ -279,7 +295,7 @@ def run_simulated_annealing_experiment(files:list[str], files_to_run:list[int], 
                             random.seed(run_seed)
                             aux.reset_evaluation_count()
                         
-                            first_sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity)
+                            first_sol = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity, [])
 
                             if run_with_initial_temp or run == 0:
                                 (useful_temp, starting_temperature, beta, gamma) = sa.find_initial_temperature(
@@ -410,3 +426,104 @@ def run_genetic_algorithm_experiment(files:list[str], files_to_run:list[int], ou
         aux.append_to_csv("genetic_algorithm", results, OUTPUT_DIR)
 
         print(f" OK Genetic algorithm experiments complete! Saved to genetic_algorithm.csv\n")
+
+# 
+def run_iterated_local_search(files:list[str], files_to_run:list[int], outer_time_limit:float, inner_time_limit:float, runs_per_file:int) -> None:
+    outer_start_time:float = time.time()
+    print("Starting iterated local search experiments...")
+    
+    # Parameters to be tested:
+    test_constructive_methods:list[str] = fs.first_solutions_list
+    test_constructive_params:list[bool] = [True, False]
+    test_perturbation_moves:list[list[str]] = [[]]
+    test_local_search_methods:list[list[ls.local_search_type]] = [[ls.variable_neighborhood_descent]]
+    test_refinement_heuristics:list[list[rh.heuristic_type]] = [[]]
+    test_neighborhood_names:list[list[str]] = [[]]
+    test_ils_max_tries:list[int] = [ils.ILS_MAX_TRIES_DEFAULT]
+    test_ls_max_tries:list[int] = [ils.LS_MAX_TRIES_DEFAULT]
+
+    for file_id in files_to_run:
+        if outer_time_limit < time.time() - outer_start_time: break
+        if file_id >= len(files): break
+            
+        pack_benefits, dep_sizes, pack_dep, capacity = aux.load_instance(files[file_id])
+        
+        results: list[dict[str, Any]] = [] # for each file
+        run_id: int = aux.get_next_run_id_number("iterated_local_search", OUTPUT_DIR)
+        seed: int = aux.get_next_seed_per_file_name("iterated_local_search", files[file_id], OUTPUT_DIR)
+        
+        for first_sol_method in test_constructive_methods:
+            for param in test_constructive_params:
+                for perturbation in test_perturbation_moves:
+                    for ls_method in test_local_search_methods:
+                        for rheu in test_refinement_heuristics:
+                            for neighbor_name in test_neighborhood_names:
+                                for ils_max_tries in test_ils_max_tries:
+                                    for ls_max_tries in test_ls_max_tries:
+
+                                        for run in range(runs_per_file):
+                                            inner_start_time:float = time.time()
+                                            if outer_time_limit < time.time() - outer_start_time or inner_time_limit < time.time() -  inner_start_time: break
+                                            
+                                            run_id: int = aux.get_next_run_id_number("iterated_local_search", OUTPUT_DIR)
+                                            run_seed: int = aux.get_next_seed_per_file_name("iterated_local_search", files[file_id], OUTPUT_DIR)
+                                            random.seed(run_seed)
+                                            aux.reset_evaluation_count()
+                                        
+                                            first_sol = fs.create_first_solution(first_sol_method, pack_benefits, dep_sizes, pack_dep, capacity, param)
+
+                                            solution:move.move_type = (first_sol[:], "error", -1)
+
+                                            solution = ils.iterated_local_search(
+                                                first_sol[:],
+                                                pack_benefits,
+                                                dep_sizes,
+                                                pack_dep,
+                                                capacity,
+                                                perturbation,
+                                                ls_method,
+                                                rheu,
+                                                neighbor_name,
+                                                time_limit= (inner_time_limit-time.time()+inner_start_time),
+                                                ils_max_tries=ils_max_tries,
+                                                ls_max_tries=ls_max_tries)
+                                            
+                                            benefit = aux.evaluate_packs(pack_benefits, pack_dep, solution[0])
+                                            elapsed: float = time.time() - inner_start_time # takes find initial temp into account, since it's done for every run
+                                            evals: int = aux.get_evaluation_count()
+                                            capacity_used: int = capacity - aux.get_remaining_capacity(dep_sizes, solution[0], capacity)
+                                            
+                                            # Extract function names from ls_method list for CSV storage
+                                            ls_method_names = [f.__name__ for f in ls_method] if ls_method else []
+                                            
+                                            results.append({
+                                                "run_id": f"iterated_local_search_{run_id}",
+                                                "instance_file": files[file_id],
+                                                "run_seed": run_seed,
+                                                "solution": aux.list_bool_to_int(solution[0]),
+                                                "benefit": benefit,
+                                                "first_solution": first_sol_method,
+                                                "parameters": "biggest_first:"+str(param),
+                                                "perturbation": perturbation,
+                                                "ls_method": str(ls_method_names),
+                                                "refinement_heuristics":rheu,
+                                                "neighborhood_names":neighbor_name,
+                                                "ils_max_tries" : ils_max_tries,
+                                                "ls_max_tries" : ls_max_tries,
+                                                "start_time": inner_start_time,
+                                                "time": elapsed,
+                                                "evaluations": evals,
+                                                "capacity_used": capacity_used,
+                                                "timestamp": datetime.now().isoformat()})
+
+                                            print(f"  Run_id:{run_id} Seed: {run_seed} run for {files[file_id]} in {elapsed/60:.2f}min - Benefit: {benefit}")
+                                            print(f"\tFirst solution: {first_sol_method}, LS methods: {ls_method_names}, ILS tries: {ils_max_tries}, LS tries: {ls_max_tries}")
+                                            run_id += 1
+
+                                            # Save to .csv
+                                            aux.append_to_csv("iterated_local_search", results, OUTPUT_DIR)
+
+        # Save to .csv
+        aux.append_to_csv("iterated_local_search", results, OUTPUT_DIR)
+
+    print(f" OK Iterated local search experiments complete! Saved to iterated_local_search.csv\n")

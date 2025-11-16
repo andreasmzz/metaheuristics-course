@@ -1,0 +1,11 @@
+run_id,instance_file,method,params,Solution,seed,benefit,time,evaluations,capacity_used,timestamp,_source_file
+constructive_1774,input/prob-software-85-100-812-12180.txt,create_randomized_pack_benefit_greedy_solution,biggest_first=False,,15.0,9661,0.0005884170532226,1,12167,2025-10-15T21:26:26.536120,constructive.csv
+constructive_8317,input/sukp02_100_85_0.10_0.75.txt,create_ratio_greedy_solution,biggest_first=True,,38229917573690750603886074,10948,0.0002894401550292969,1,11991,2025-10-17T12:32:14.537392,constructive.csv
+constructive_1849,input/sukp03_100_100_0.10_0.75.txt,create_ratio_greedy_solution,biggest_first=True,,,11654,0.0016682147979736,1,11122,2025-10-15T21:26:27.465801,constructive.csv
+constructive_2161,input/sukp06_200_200_0.10_0.75.txt,create_pack_benefit_greedy_solution,biggest_first=True,,,7924,0.0017051696777343,1,25619,2025-10-15T21:26:28.567818,constructive.csv
+constructive_7705,input/sukp07_285_300_0.10_0.75.txt,create_pack_benefit_greedy_solution,biggest_first=True,,1622252848154648481779052703966520678253594508686293007238790315653024432251702490831218685,7704,0.0019230842590332031,1,38832,2025-10-17T12:31:44.027878,constructive.csv
+constructive_157,input/sukp12_400_400_0.10_0.75.txt,create_pack_benefit_greedy_solution,default,,,6983,0.0064783096313476,1,49755,2025-10-15T12:10:43.888380,constructive.csv
+constructive_2659,input/sukp18_100_100_0.15_0.85.txt,create_randomized_pack_benefit_greedy_solution,biggest_first=True,,6.0,10514,0.000859260559082,1,15190,2025-10-15T21:26:31.835593,constructive.csv
+constructive_311,input/sukp24_300_300_0.15_0.85.txt,create_pack_benefit_greedy_solution,default,,,6490,0.0052721500396728,1,45875,2025-10-15T12:10:49.066120,constructive.csv
+constructive_5467,input/sukp28_485_500_0.15_0.85.txt,create_randomized_pack_benefit_greedy_solution,biggest_first=False,12,3247810853942772854849805152669990462352800874858491026973391874935536644212212298334294083651391478398907758046693351966416062716417065771926573546495,6303,0.008947610855102539,1,71645,2025-10-17T12:22:10.270854,constructive.csv
+constructive_1237,input/sukp29_500_485_0.15_0.85.txt,create_pack_benefit_greedy_solution,biggest_first=True,,,6651,0.0171048641204834,1,67470,2025-10-15T21:24:46.985880,constructive.csv

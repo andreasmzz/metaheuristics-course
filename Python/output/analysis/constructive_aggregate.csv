@@ -1,0 +1,10 @@
+method,instances,median_of_medians,wins
+create_randomized_pack_benefit_greedy_solution,10,5680.0,6
+create_pack_benefit_greedy_solution,10,5832.25,4
+create_ratio_greedy_solution,10,1199.0,0
+create_randomized_dep_size_greedy_solution,10,494.25,0
+create_randomized_ratio_greedy_solution,10,291.75,0
+create_num_pack_greedy_solution,10,279.5,0
+create_randomized_num_pack_greedy_solution,10,223.75,0
+create_randomic_solution,10,117.25,0
+create_dep_size_greedy_solution,10,2.110004425048828e-05,0

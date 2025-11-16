@@ -4,7 +4,7 @@ import time
 import pprint
 
 import auxiliary_functions as aux
-import move as move
+import move
 import first_solution as fs
 import simulated_annealing as sa
 import run_experiment
@@ -20,17 +20,20 @@ csv_files_paths:list[str] = [
 ]
 
 file_names:list[str] = [
-    "input/prob-software-85-100-812-12180.txt", # 0
-    "input/sukp03_100_100_0.10_0.75.txt",       # 1
-    "input/sukp06_200_200_0.10_0.75.txt",       # 2
-    "input/sukp12_400_400_0.10_0.75.txt",       # 3
-    "input/sukp18_100_100_0.15_0.85.txt",       # 4
-    "input/sukp24_300_300_0.15_0.85.txt",       # 5
-    "input/sukp29_500_485_0.15_0.85.txt"        # 6
+    "input/prob-software-85-100-812-12180.txt", # 00
+    "input/sukp03_100_100_0.10_0.75.txt",       # 01
+    "input/sukp06_200_200_0.10_0.75.txt",       # 02
+    "input/sukp12_400_400_0.10_0.75.txt",       # 03
+    "input/sukp18_100_100_0.15_0.85.txt",       # 04
+    "input/sukp24_300_300_0.15_0.85.txt",       # 05
+    "input/sukp29_500_485_0.15_0.85.txt",       # 06
+    "input/sukp02_100_85_0.10_0.75.txt",        # 07
+    "input/sukp07_285_300_0.10_0.75.txt",       # 08
+    "input/sukp28_485_500_0.15_0.85.txt",       # 09
 ]
 
-BIGGER_TIME_LIMIT: float = 120.0 *60.0 # change only the minutes
-SMALLER_TIME_LIMIT: float = 1.5 *60.0 # change only the minutes
+BIGGER_TIME_LIMIT: float = 10.0 *60.0 # change only the minutes
+SMALLER_TIME_LIMIT: float = 1.0 *60.0 # change only the minutes
 
 
 
@@ -65,19 +68,68 @@ def main() -> None:
     inner_time_limit: float = SMALLER_TIME_LIMIT
 
     
+    print("Test")
     # for test only use
-    pack_benefits, dep_sizes, pack_dep, capacity = aux.load_instance(file_names[3])
+    pack_benefits02, dep_sizes02, pack_dep02, capacity02 = aux.load_instance(file_names[7])
+    pack_benefits07, dep_sizes07, pack_dep07, capacity07 = aux.load_instance(file_names[8])
+    pack_benefits28, dep_sizes28, pack_dep28, capacity28 = aux.load_instance(file_names[9])
+
     count:int = 0
     best_sol:list[bool] = []
     best_sol_eval: int = 0
     new_temp:float = 0.0
 
-    for csv_file in csv_files_paths:
-        print(f"\nPrinting for {csv_file}\n")
-        pprint.pprint(aux.get_best_benefit_row_per_instance(csv_file))
+    print("Starting all experiments\n")
+    #run_experiment.run_constructive_experiment(file_names, [7, 8, 9])
+    #run_experiment.run_local_search_experiment(file_names, [7, 8, 9], 3)
+    #run_experiment.run_simulated_annealing_experiment(file_names, [7, 8, 9], outer_time_limit, inner_time_limit, 3)
+    #run_experiment.run_iterated_local_search(file_names, [9], outer_time_limit, inner_time_limit, 3)
+    
+    #analyze_results.analyze_constructive()
+    #analyze_results.analyze_local_search()
+    #analyze_results.analyze_simulated_annealing()
+    #analyze_results.analyze_iterated_local_search()
+
+    #analyze_results.analyze_best_runs_per_instance()
+    
+    sol02 = 38232241861191956890123770
+    sol07 = 1622252848154648481779052703966520678253594508686293007238790315653024432251702490831218685
+    sol28 = 3247810853942772854849805152669990462352800874858491026973391874935536644212212298334294083651391478398907758046693351966416062716417065771926573546495
+
+    print(f"Sol 02 benefit: {aux.evaluate_packs(pack_benefits02, pack_dep02, aux.int_to_list_bool(sol02, len(dep_sizes02)))}")
+    print(f"Sol 07 benefit: {aux.evaluate_packs(pack_benefits07, pack_dep07, aux.int_to_list_bool(sol07, len(dep_sizes07)))}")
+    print(f"Sol 28 benefit: {aux.evaluate_packs(pack_benefits28, pack_dep28, aux.int_to_list_bool(sol28, len(dep_sizes28)))}")
+    print()
+    print(f"Sol 02 space left: {aux.get_remaining_capacity(dep_sizes02, aux.int_to_list_bool(sol02, len(dep_sizes02)), capacity02)}")
+    print(f"Sol 07 space left: {aux.get_remaining_capacity(dep_sizes07, aux.int_to_list_bool(sol07, len(dep_sizes07)), capacity07)}")
+    print(f"Sol 28 space left: {aux.get_remaining_capacity(dep_sizes28, aux.int_to_list_bool(sol28, len(dep_sizes28)), capacity28)}")
+    print()
+    print("Sol 02 to int list: ", aux.int_to_list_int(sol02, len(dep_sizes02)))
+    print("Sol 07 to int list: ", aux.int_to_list_int(sol07, len(dep_sizes07)))
+    print("Sol 28 to int list: ", aux.int_to_list_int(sol28, len(dep_sizes28)))
+    print()
+    print("Sol list == dep_size : ", len(aux.int_to_list_bool(sol02, len(dep_sizes02))) == len(dep_sizes02))
+    print("Sol list == dep_size : ", len(aux.int_to_list_bool(sol07, len(dep_sizes07))) == len(dep_sizes07))
+    print("Sol list == dep_size : ", len(aux.int_to_list_bool(sol28, len(dep_sizes28))) == len(dep_sizes28))
+
 
     '''
+    print("Starting ILS")
+    run_experiment.run_iterated_local_search(file_names, [7, 8, 9], outer_time_limit, inner_time_limit, 3)
+    print("Ended ILS")
+    '''
+
+    #run_experiment.run_constructive_experiment(file_names, [7,8,9])
+
+    #pprint.pprint(aux.get_best_benefit_row_per_instance(csv_files_paths[0]))
     
+    
+    '''
+    a02 = [0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]
+    a07 = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    a28 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    '''
+    '''
     new_sol:list[bool] = fs.create_randomic_solution(pack_benefits, dep_sizes, pack_dep, capacity)
     
     new_sol:list[bool] = [False for i in range(len(dep_sizes))]
@@ -176,6 +228,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    print("Main")
     main()
 
 

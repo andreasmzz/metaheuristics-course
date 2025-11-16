@@ -1,0 +1,17 @@
+instance_file,config,count,best,median,avg,std,interquartile_range,outliers,avg_time
+prob-software-85-100-812-12180.txt,hill_climbing | first_best_step | flip_bit,30,8107.0,8107.0,8107.0,0.0,0.0,0,0.12760329246520996
+prob-software-85-100-812-12180.txt,"hill_climbing | random_best_step | flip_bit,swap_bits",30,10952.0,9860.5,9902.566666666668,542.5721425626803,871.5,0,2.8766854842503866
+prob-software-85-100-812-12180.txt,variable_neighborhood_descent | absolute_best_step | flip_bit,30,8107.0,8107.0,8107.0,0.0,0.0,0,0.13447412649790447
+prob-software-85-100-812-12180.txt,"variable_neighborhood_descent | random_best_step,first_best_step | flip_bit,swap_bits",30,11490.0,10952.0,10969.633333333333,300.2995611664819,573.5,0,20.282266132036845
+sukp02_100_85_0.10_0.75.txt,hill_climbing | first_best_step | flip_bit,33,10948.0,10948.0,10948.0,0.0,0.0,0,0.09296586296775124
+sukp02_100_85_0.10_0.75.txt,"hill_climbing | random_best_step | flip_bit,swap_bits",32,12711.0,11981.5,11903.40625,537.2804193267567,904.75,0,2.347591854631901
+sukp02_100_85_0.10_0.75.txt,variable_neighborhood_descent | absolute_best_step | flip_bit,3,10948.0,10948.0,10948.0,0.0,0.0,0,0.09966707229614258
+sukp02_100_85_0.10_0.75.txt,"variable_neighborhood_descent | random_best_step,first_best_step | flip_bit,swap_bits",3,12654.0,12404.0,12487.333333333334,144.33756729740645,250.0,0,8.228382110595703
+sukp07_285_300_0.10_0.75.txt,hill_climbing | first_best_step | flip_bit,3,1669.0,1669.0,1669.0,0.0,0.0,0,3.100311040878296
+sukp07_285_300_0.10_0.75.txt,"hill_climbing | random_best_step | flip_bit,swap_bits",3,2649.0,2511.0,2456.0,225.58590381493255,441.0,0,14.765289704004923
+sukp07_285_300_0.10_0.75.txt,variable_neighborhood_descent | absolute_best_step | flip_bit,3,1669.0,1669.0,1669.0,0.0,0.0,0,3.119582176208496
+sukp07_285_300_0.10_0.75.txt,"variable_neighborhood_descent | random_best_step,first_best_step | flip_bit,swap_bits",3,2649.0,2511.0,2456.0,225.58590381493255,441.0,0,30.019060055414837
+sukp28_485_500_0.15_0.85.txt,hill_climbing | first_best_step | flip_bit,3,0.0,0.0,0.0,0.0,0.0,0,19.462859471638996
+sukp28_485_500_0.15_0.85.txt,"hill_climbing | random_best_step | flip_bit,swap_bits",3,522.0,507.0,423.3333333333333,158.08331136882646,281.0,0,30.063782771428425
+sukp28_485_500_0.15_0.85.txt,variable_neighborhood_descent | absolute_best_step | flip_bit,3,0.0,0.0,0.0,0.0,0.0,0,19.792689085006714
+sukp28_485_500_0.15_0.85.txt,"variable_neighborhood_descent | random_best_step,first_best_step | flip_bit,swap_bits",3,522.0,507.0,423.3333333333333,158.08331136882646,281.0,0,30.07448387145996

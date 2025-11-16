@@ -1,0 +1,4 @@
+instance_file,config,count,best,median,avg,std,interquartile_range,outliers,avg_time
+sukp02_100_85_0.10_0.75.txt,['variable_neighborhood_descent'] | [] | [],1539,11658.0,6354.0,7030.895386614685,2730.2771931559714,4232.0,0,5.011064299830684
+sukp07_285_300_0.10_0.75.txt,['variable_neighborhood_descent'] | [] | [],559,7704.0,516.0,1293.432915921288,1973.2480979277625,1341.0,42,18.82333726575848
+sukp28_485_500_0.15_0.85.txt,['variable_neighborhood_descent'] | [] | [],104,1033.0,0.0,143.58653846153845,308.672875216948,0.0,0,50.3027642094172
