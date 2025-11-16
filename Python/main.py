@@ -108,10 +108,9 @@ def main() -> None:
     print("Sol 07 to int list: ", aux.int_to_list_int(sol07, len(dep_sizes07)))
     print("Sol 28 to int list: ", aux.int_to_list_int(sol28, len(dep_sizes28)))
     print()
-    print("Sol list == dep_size : ", len(aux.int_to_list_bool(sol02, len(dep_sizes02))) == len(dep_sizes02))
-    print("Sol list == dep_size : ", len(aux.int_to_list_bool(sol07, len(dep_sizes07))) == len(dep_sizes07))
-    print("Sol list == dep_size : ", len(aux.int_to_list_bool(sol28, len(dep_sizes28))) == len(dep_sizes28))
-
+    print("Pack sol 02: ", aux.list_bool_to_list_int(aux.get_package_solution(aux.int_to_list_bool(sol02, len(dep_sizes02)), pack_benefits02, pack_dep02)))
+    print("Pack sol 07: ", aux.list_bool_to_list_int(aux.get_package_solution(aux.int_to_list_bool(sol07, len(dep_sizes07)), pack_benefits07, pack_dep07)))
+    print("Pack sol 28: ", aux.list_bool_to_list_int(aux.get_package_solution(aux.int_to_list_bool(sol28, len(dep_sizes28)), pack_benefits28, pack_dep28))) 
 
     '''
     print("Starting ILS")

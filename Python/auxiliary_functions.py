@@ -217,6 +217,20 @@ def pack_from_dep_list_bool(dep_sol:list[bool], pack_benefits:list[int], dep_siz
 
     return pack_sol
 
+# 
+def get_package_solution(dep_sol:list[bool], pack_benefits:list[int], pack_dep:list[tuple[int, int]]) -> list[bool]:
+    pack_all_deps: dict[int, set[int]] = get_pack_dict(pack_dep)
+    pack_sol: list[bool] = [False] * len(pack_benefits)
+    # compute selected dependency indices once
+    selected_set = set(i for i, v in enumerate(dep_sol) if v)
+
+    for pack in range(len(pack_benefits)):
+        required = pack_all_deps.get(pack, set())
+        if required.issubset(selected_set):
+            pack_sol[pack] = True
+
+    return pack_sol
+
 '''
 def ga_debug_report(gen: int, population: list[list[bool]], population_fitness: list[int], pack_benefits: list[int], pack_dep: list[tuple[int, int]], dep_sizes: list[int], capacity: int, verbose: bool = False, debug_state: dict | None = None, sample_n: int = 5, print_to_stdout: bool = True) -> dict | None:
     """Verbose-only GA diagnostics and optional CSV logging.
