@@ -1,0 +1,45 @@
+Instance: school_transport_2_4_10_10_0_v1.txt, Best Method: SA, Best Cost: (9.56062329783655, 12), Best Sol: 3 2 4 1 0 5
+Instance: school_transport_2_4_10_10_1_v1.txt, Best Method: SA, Best Cost: (9.773387165490545, 12), Best Sol: 3 2 5 4 1 0
+Instance: school_transport_2_4_10_10_2_v1.txt, Best Method: RRT, Best Cost: (9.019764837837084, 11), Best Sol: 5 3 4 1 2 0
+Instance: school_transport_2_4_10_10_3_v1.txt, Best Method: SA, Best Cost: (10.39834563766817, 12), Best Sol: 5 3 1 4 0 2
+Instance: school_transport_2_4_10_10_4_v1.txt, Best Method: SA, Best Cost: (10.79669127533634, 14), Best Sol: 3 2 4 5 1 0
+Instance: school_transport_2_8_10_10_0_v1.txt, Best Method: SA, Best Cost: (21.001174407666227, 27), Best Sol: 3 2 6 8 4 7 9 5 1 0
+Instance: school_transport_2_8_10_10_1_v1.txt, Best Method: SA, Best Cost: (18.78739606025091, 24), Best Sol: 7 2 4 6 5 8 1 0 3 9
+Instance: school_transport_2_8_10_10_2_v1.txt, Best Method: SA, Best Cost: (21.102916426724942, 25), Best Sol: 7 2 3 9 0 4 5 1 8 6
+Instance: school_transport_2_8_10_10_3_v1.txt, Best Method: SA, Best Cost: (19.2892801989182, 24), Best Sol: 4 2 5 8 9 6 3 7 0 1
+Instance: school_transport_2_8_10_10_4_v1.txt, Best Method: RRT, Best Cost: (23.80702571072533, 31), Best Sol: 9 2 0 4 8 1 5 3 6 7
+Instance: school_transport_2_16_10_10_0_v1.txt, Best Method: SA, Best Cost: (33.20550653575616, 42), Best Sol: 13 4 11 9 17 8 15 6 14 16 10 7 12 5 0 3 1 2
+Instance: school_transport_2_16_10_10_1_v1.txt, Best Method: GDA, Best Cost: (33.783168657497, 42), Best Sol: 4 15 17 7 11 17 8 10 5 6 16 12 0 14 13 2 9 1 3
+Instance: school_transport_2_16_10_10_2_v1.txt, Best Method: GDA, Best Cost: (33.23301498241211, 43), Best Sol: 13 3 12 11 5 8 14 15 4 2 6 7 10 9 16 1 17 0
+Instance: school_transport_2_16_10_10_3_v1.txt, Best Method: SA, Best Cost: (30.297840574279835, 36), Best Sol: 16 7 10 5 15 17 14 12 11 13 8 4 9 6 1 2 3 0
+Instance: school_transport_2_16_10_10_4_v1.txt, Best Method: SA, Best Cost: (28.42955328423773, 35), Best Sol: 15 17 11 7 13 2 16 5 10 12 3 1 6 4 8 0 14 9
+Instance: school_transport_2_32_10_10_0_v1.txt, Best Method: SA, Best Cost: (42.257980408983926, 50), Best Sol: 29 5 25 15 23 7 22 26 8 21 30 2 20 11 18 10 12 31 13 19 3 4 24 27 9 6 17 33 28 32 14 16 1 0
+Instance: school_transport_2_32_10_10_1_v1.txt, Best Method: SA, Best Cost: (51.9994717971597, 59), Best Sol: 27 4 5 13 25 12 31 21 9 32 30 19 11 24 28 16 10 3 2 26 7 29 8 17 23 15 22 18 14 20 6 1 33 0
+Instance: school_transport_2_32_10_10_2_v1.txt, Best Method: SA, Best Cost: (59.133047045529025, 71), Best Sol: 6 12 13 17 19 20 18 10 16 25 14 27 22 33 24 5 3 9 11 26 32 30 28 8 4 0 2 31 21 1 15 7 29 23
+Instance: school_transport_2_32_10_10_3_v1.txt, Best Method: SA, Best Cost: (51.20005801635743, 58), Best Sol: 20 2 19 15 29 17 28 8 11 25 9 10 14 7 16 4 26 23 12 27 3 6 24 18 5 31 22 33 21 13 32 1 30 0
+Instance: school_transport_2_32_10_10_4_v1.txt, Best Method: SA, Best Cost: (44.76340381965991, 51), Best Sol: 19 6 25 21 24 8 17 22 20 11 30 27 16 4 28 31 10 9 14 12 23 32 15 5 13 33 26 29 18 7 3 2 1 0
+Instance: school_transport_4_4_10_10_0_v1.txt, Best Method: RRT, Best Cost: (19.11770732366439, 25), Best Sol: 5 6 7 4 0 1 3 2
+Instance: school_transport_4_4_10_10_1_v1.txt, Best Method: SA, Best Cost: (11.22677276241436, 14), Best Sol: 4 2 0 1 6 5 3 7
+Instance: school_transport_4_4_10_10_2_v1.txt, Best Method: SA, Best Cost: (18.497365151260954, 21), Best Sol: 3 4 0 5 7 1 6 2
+Instance: school_transport_4_4_10_10_3_v1.txt, Best Method: SA, Best Cost: (12.60555127546399, 14), Best Sol: 1 5 2 6 4 0 7 3
+Instance: school_transport_4_4_10_10_4_v1.txt, Best Method: SA, Best Cost: (17.53663105724556, 23), Best Sol: 6 7 4 3 5 0 1 2
+Instance: school_transport_4_8_10_10_0_v1.txt, Best Method: SA, Best Cost: (27.650441467777792, 34), Best Sol: 10 6 7 5 4 1 9 0 8 3 2 11
+Instance: school_transport_4_8_10_10_1_v1.txt, Best Method: SA, Best Cost: (25.87132965131785, 32), Best Sol: 6 10 8 7 9 4 1 5 3 0 11 2
+Instance: school_transport_4_8_10_10_2_v1.txt, Best Method: SA, Best Cost: (30.045915969759044, 37), Best Sol: 5 6 11 9 10 1 4 8 3 7 0 2
+Instance: school_transport_4_8_10_10_3_v1.txt, Best Method: SA, Best Cost: (28.342582136372652, 35), Best Sol: 5 4 10 6 8 11 2 3 7 1 0 9
+Instance: school_transport_4_8_10_10_4_v1.txt, Best Method: RRT, Best Cost: (29.45288868619085, 38), Best Sol: 5 8 7 4 10 0 9 11 3 6 1 2
+Instance: school_transport_4_16_10_10_0_v1.txt, Best Method: SA, Best Cost: (34.253110309870934, 40), Best Sol: 16 11 13 9 6 7 15 2 14 12 4 3 19 18 10 1 0 17 8 5
+Instance: school_transport_4_16_10_10_1_v1.txt, Best Method: SA, Best Cost: (38.53780546491178, 48), Best Sol: 5 4 9 6 13 12 19 8 10 17 11 14 0 16 18 7 3 2 1 15
+Instance: school_transport_4_16_10_10_2_v1.txt, Best Method: SA, Best Cost: (38.49307520050288, 48), Best Sol: 14 18 10 8 17 12 4 19 6 16 7 11 9 2 15 5 3 13 1 0
+Instance: school_transport_4_16_10_10_3_v1.txt, Best Method: SA, Best Cost: (38.68233724509255, 48), Best Sol: 4 13 17 7 5 10 14 18 19 11 12 16 15 6 0 2 9 8 3 1
+Instance: school_transport_4_16_10_10_4_v1.txt, Best Method: SA, Best Cost: (32.19348530673794, 38), Best Sol: 14 16 18 17 11 15 13 7 8 4 3 9 19 5 12 10 6 2 1 0
+Instance: school_transport_4_32_10_10_0_v1.txt, Best Method: SA, Best Cost: (56.451842892173914, 66), Best Sol: 15 4 28 6 35 34 21 20 8 11 10 9 27 13 17 25 30 29 24 19 16 32 14 5 18 7 26 33 22 1 31 3 12 23 0 2
+Instance: school_transport_4_32_10_10_1_v1.txt, Best Method: SA, Best Cost: (53.60497636364508, 63), Best Sol: 31 33 14 29 7 32 17 18 34 28 6 35 5 11 21 26 30 8 9 23 10 4 20 15 22 13 16 27 25 19 12 2 24 0 1 3
+Instance: school_transport_4_32_10_10_2_v1.txt, Best Method: SA, Best Cost: (155.23052004285492, 195), Best Sol: 25 26 33 19 11 17 30 24 10 27 32 12 28 8 7 16 13 31 22 29 14 20 21 23 35 9 4 34 15 5 18 6 3 0 2 1
+Instance: school_transport_4_32_10_10_3_v1.txt, Best Method: SA, Best Cost: (53.49137258999636, 64), Best Sol: 23 34 25 31 33 27 14 29 20 16 22 7 32 4 35 24 11 12 5 18 15 30 2 17 9 10 21 13 6 28 1 26 8 19 3 0
+Instance: school_transport_4_32_10_10_4_v1.txt, Best Method: SA, Best Cost: (51.558543488729676, 62), Best Sol: 34 30 22 4 19 13 12 23 8 28 21 7 16 20 27 15 33 6 9 5 10 24 18 14 17 35 32 11 29 2 31 25 1 26 3 0
+Instance: school_transport_8_8_10_10_0_v1.txt, Best Method: SA, Best Cost: (72.92240494490008, 96), Best Sol: 15 12 11 10 13 9 8 14 6 4 1 5 2 0 3 7
+Instance: school_transport_8_8_10_10_1_v1.txt, Best Method: SA, Best Cost: (32.52622746881664, 39), Best Sol: 13 9 14 11 10 12 4 3 8 7 15 5 6 2 0 1
+Instance: school_transport_8_8_10_10_2_v1.txt, Best Method: SA, Best Cost: (69.39360586438723, 92), Best Sol: 13 15 11 8 12 10 14 9 1 4 2 0 5 3 6 7
+Instance: school_transport_8_8_10_10_3_v1.txt, Best Method: SA, Best Cost: (62.059982923687535, 76), Best Sol: 15 9 8 13 12 10 14 11 1 6 3 5 0 2 7 4
+Instance: school_transport_8_8_10_10_4_v1.txt, Best Method: SA, Best Cost: (60.31121438401406, 77), Best Sol: 8 14 12 9 11 13 15 10 2 1 4 3 7 6 5 0
